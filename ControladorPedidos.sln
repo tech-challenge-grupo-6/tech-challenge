@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{D77A5B97-7E32-4C32-B7D4-CC7C7CEAC3F8}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{B9C52D58-FE09-4F65-8CFE-B931A7CF130C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControladorPedidos", "src\ControladorPedidos\ControladorPedidos.csproj", "{94B5600E-2EBF-484B-94EB-D01658EB096A}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControladorPedidos.Tests", "tests\ControladorPedidos.Tests\ControladorPedidos.Tests.csproj", "{2BE34E4F-C7B7-4B13-990B-264DEE85C909}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4D1F1B00-F3CD-463A-A777-9E03C4C49CE2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControladorPedidos", "src\ControladorPedidos\ControladorPedidos.csproj", "{D67EFBF3-04DC-41BB-AA38-99A2A15D6215}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,20 +17,20 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{94B5600E-2EBF-484B-94EB-D01658EB096A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{94B5600E-2EBF-484B-94EB-D01658EB096A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{94B5600E-2EBF-484B-94EB-D01658EB096A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{94B5600E-2EBF-484B-94EB-D01658EB096A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2BE34E4F-C7B7-4B13-990B-264DEE85C909}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2BE34E4F-C7B7-4B13-990B-264DEE85C909}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2BE34E4F-C7B7-4B13-990B-264DEE85C909}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2BE34E4F-C7B7-4B13-990B-264DEE85C909}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D67EFBF3-04DC-41BB-AA38-99A2A15D6215}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D67EFBF3-04DC-41BB-AA38-99A2A15D6215}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D67EFBF3-04DC-41BB-AA38-99A2A15D6215}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D67EFBF3-04DC-41BB-AA38-99A2A15D6215}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{94B5600E-2EBF-484B-94EB-D01658EB096A} = {D77A5B97-7E32-4C32-B7D4-CC7C7CEAC3F8}
 		{2BE34E4F-C7B7-4B13-990B-264DEE85C909} = {B9C52D58-FE09-4F65-8CFE-B931A7CF130C}
+		{D67EFBF3-04DC-41BB-AA38-99A2A15D6215} = {4D1F1B00-F3CD-463A-A777-9E03C4C49CE2}
 	EndGlobalSection
 EndGlobal

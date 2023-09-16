@@ -9,4 +9,4 @@ services:
       context: .
       dockerfile: src/ControladorPedidos/Dockerfile
     ports:
-      - 5146:5146
+      - 5263:5263
