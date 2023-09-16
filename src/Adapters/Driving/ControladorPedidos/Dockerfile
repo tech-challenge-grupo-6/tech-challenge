@@ -1,8 +1,8 @@
 FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
 WORKDIR /app
-EXPOSE 5263
+EXPOSE 5003
 
-ENV ASPNETCORE_URLS=http://+:5263
+ENV ASPNETCORE_URLS=http://+:5003
 
 # Creates a non-root user with an explicit UID and adds permission to access the /app folder
 # For more info, please refer to https://aka.ms/vscode-docker-dotnet-configure-containers
@@ -12,10 +12,12 @@ USER appuser
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 ARG configuration=Release
 WORKDIR /src
-COPY ["src/ControladorPedidos/ControladorPedidos.csproj", "src/ControladorPedidos/"]
-RUN dotnet restore "src/ControladorPedidos/ControladorPedidos.csproj"
+COPY ["src/Adapters/Driving/ControladorPedidos/ControladorPedidos.csproj", "src/Adapters/Driving/ControladorPedidos/"]
+COPY ["src/Core/Application/Application.csproj", "src/Core/Application/"]
+COPY ["src/Core/Domain/Domain.csproj", "src/Core/Domain/"]
+RUN dotnet restore "src/Adapters/Driving/ControladorPedidos/ControladorPedidos.csproj"
 COPY . .
-WORKDIR "/src/src/ControladorPedidos"
+WORKDIR "/src/src/Adapters/Driving/ControladorPedidos"
 RUN dotnet build "ControladorPedidos.csproj" -c $configuration -o /app/build
 
 FROM build AS publish

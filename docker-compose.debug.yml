@@ -7,11 +7,11 @@ services:
     image: controladorpedidos
     build:
       context: .
-      dockerfile: src/ControladorPedidos/Dockerfile
+      dockerfile: src/Adapters/Driving/ControladorPedidos/Dockerfile
       args:
         - configuration=Debug
     ports:
-      - 5263:5263
+      - 5003:5003
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
     volumes:

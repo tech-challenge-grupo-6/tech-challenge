@@ -7,6 +7,6 @@ services:
     image: controladorpedidos
     build:
       context: .
-      dockerfile: src/ControladorPedidos/Dockerfile
+      dockerfile: src/Adapters/Driving/ControladorPedidos/Dockerfile
     ports:
-      - 5263:5263
+      - 5003:5003
