@@ -1,0 +1,30 @@
+FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
+WORKDIR /app
+EXPOSE 5003
+
+ENV ASPNETCORE_URLS=http://+:5003
+
+# Creates a non-root user with an explicit UID and adds permission to access the /app folder
+# For more info, please refer to https://aka.ms/vscode-docker-dotnet-configure-containers
+RUN adduser -u 5678 --disabled-password --gecos "" appuser && chown -R appuser /app
+USER appuser
+
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+ARG configuration=Release
+WORKDIR /src
+COPY ["src/Adapters/Driving/ControladorPedidos/ControladorPedidos.csproj", "src/Adapters/Driving/ControladorPedidos/"]
+COPY ["src/Core/Application/Application.csproj", "src/Core/Application/"]
+COPY ["src/Core/Domain/Domain.csproj", "src/Core/Domain/"]
+RUN dotnet restore "src/Adapters/Driving/ControladorPedidos/ControladorPedidos.csproj"
+COPY . .
+WORKDIR "/src/src/Adapters/Driving/ControladorPedidos"
+RUN dotnet build "ControladorPedidos.csproj" -c $configuration -o /app/build
+
+FROM build AS publish
+ARG configuration=Release
+RUN dotnet publish "ControladorPedidos.csproj" -c $configuration -o /app/publish /p:UseAppHost=false
+
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+ENTRYPOINT ["dotnet", "ControladorPedidos.dll"]

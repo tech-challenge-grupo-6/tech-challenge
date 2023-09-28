@@ -1,0 +1,12 @@
+# Please refer https://aka.ms/HTTPSinContainer on how to setup an https developer certificate for your ASP.NET Core service.
+
+version: '3.4'
+
+services:
+  controladorpedidos:
+    image: controladorpedidos
+    build:
+      context: .
+      dockerfile: src/Adapters/Driving/ControladorPedidos/Dockerfile
+    ports:
+      - 5003:5003
