@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace DatabaseAdapters;
 
@@ -8,6 +9,8 @@ public class DatabaseContext : DbContext
     {
 
     }
+
+    public DbSet<Test> Tests { get; set; } = null!;
 
     override protected void OnModelCreating(ModelBuilder modelBuilder)
     {

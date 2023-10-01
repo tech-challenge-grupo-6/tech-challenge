@@ -14,5 +14,31 @@ services:
       - 5003:5003
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=server=database_mysql;database=controlador_pedidos;user=root;password=P@ssWord
     volumes:
       - ~/.vsdbg:/remote_debugger:rw
+    depends_on:
+      - database_mysql
+    networks:
+      - controladorpedidos-network
+  
+  database_mysql:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: P@ssWord
+      MYSQL_DATABASE: controlador_pedidos
+    ports:
+      - 3306:3306
+    expose:
+      - 3306
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - controladorpedidos-network
+
+networks:
+  controladorpedidos-network:
+    driver: bridge
+volumes:
+  mysql_data:
+    driver: local
