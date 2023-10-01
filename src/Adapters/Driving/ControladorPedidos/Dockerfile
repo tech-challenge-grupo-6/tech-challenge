@@ -13,6 +13,7 @@ FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 ARG configuration=Release
 WORKDIR /src
 COPY ["src/Adapters/Driving/ControladorPedidos/ControladorPedidos.csproj", "src/Adapters/Driving/ControladorPedidos/"]
+COPY ["src/Adapters/Driven/DatabaseAdapters/DatabaseAdapters.csproj", "src/Adapters/Driven/DatabaseAdapters/"]
 COPY ["src/Core/Application/Application.csproj", "src/Core/Application/"]
 COPY ["src/Core/Domain/Domain.csproj", "src/Core/Domain/"]
 RUN dotnet restore "src/Adapters/Driving/ControladorPedidos/ControladorPedidos.csproj"
