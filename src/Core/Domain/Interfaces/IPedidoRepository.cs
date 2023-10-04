@@ -1,18 +1,17 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Domain.Models;
+using Domain;
 
 namespace Domain
 {
-  public interface IPedidoRepository<T> where Pedido<T>: class
+  public interface IPedidoRepository
   {
-    Task<IEnumerable<T>> GetAll();
-    Task<T> GetById(int id);
-    Task<IEnumerable<T>> GetBySatus(Status status);
-    Task<IEnumerable<T>> GetByCliente(Cliente cliente);
+    Task<IEnumerable<Pedido>> GetAll();
+    Task<IEnumerable<Pedido>> GetBySatus(Status status);
+    Task<IEnumerable<Pedido>> GetByCliente(Cliente cliente);
+    Task<Pedido> GetById(int id);
 
-    void Add(T cliente);
-    void Update(T cliente);
+    void UpdateStatus(Status status);
+    void Add(Pedido pedido);
   }
 }
