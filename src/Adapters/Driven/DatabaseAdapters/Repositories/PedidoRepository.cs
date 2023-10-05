@@ -18,7 +18,7 @@ namespace DatabaseAdapters.Repositories
       return await _dbContext.Pedidos.AsNoTracking().ToListAsync();
     }
 
-    public async Task<IEnumerable<Pedido>> GetBySatus(Status status)
+    public async Task<IEnumerable<Pedido>> GetByStatus(Status status)
     {
       return await _dbContext.Pedidos.AsNoTracking().Include(p => p.Status).Where(s => s.Status == status).ToListAsync();
     }
@@ -36,10 +36,12 @@ namespace DatabaseAdapters.Repositories
     public void Add(Pedido Pedido)
     {
       _dbContext.Pedidos.Add(Pedido);
+      _dbContext.SaveChanges();
     }
     public void UpdateStatus(Status status)
     {
       _dbContext.Pedidos.Update(status);
+      _dbContext.SaveChanges();
     }
   }
 }

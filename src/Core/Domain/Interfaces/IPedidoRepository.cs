@@ -7,7 +7,7 @@ namespace Domain
   public interface IPedidoRepository
   {
     Task<IEnumerable<Pedido>> GetAll();
-    Task<IEnumerable<Pedido>> GetBySatus(Status status);
+    Task<IEnumerable<Pedido>> GetByStatus(Status status);
     Task<IEnumerable<Pedido>> GetByCliente(Cliente cliente);
     Task<Pedido> GetById(int id);
 

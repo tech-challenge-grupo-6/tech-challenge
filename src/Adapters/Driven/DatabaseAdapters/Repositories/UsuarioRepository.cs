@@ -23,10 +23,12 @@ namespace DatabaseAdapters.Repositories
     public void Add(Usuario Usuario)
     {
       _dbContext.Usuarios.Add(Usuario);
+      _dbContext.SaveChanges();
     }
     public void Update(Usuario Usuario)
     {
       _dbContext.Usuarios.Update(Usuario);
+      _dbContext.SaveChanges();
     }
   }
 }

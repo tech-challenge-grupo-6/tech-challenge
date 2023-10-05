@@ -24,10 +24,12 @@ namespace DatabaseAdapters.Repositories
     public void Add(CategoriaProduto CategoriaProduto)
     {
       _dbContext.CategoriaProdutos.Add(CategoriaProduto);
+      _dbContext.SaveChanges();
     }
     public void Update(CategoriaProduto CategoriaProduto)
     {
       _dbContext.CategoriaProdutos.Update(CategoriaProduto);
+      _dbContext.SaveChanges();
     }
   }
 }

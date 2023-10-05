@@ -29,19 +29,23 @@ namespace DatabaseAdapters.Repositories
     public void Add(Produto Produto)
     {
       _dbContext.Produtos.Add(Produto);
+      _dbContext.SaveChanges();
     }
     public void Update(Produto Produto)
     {
       _dbContext.Produtos.Update(Produto);
+      _dbContext.SaveChanges();
     }
 
     public void Add(CategoriaProduto Categoria)
     {
       _dbContext.CategoriaProdutos.Add(Categoria);
+      _dbContext.SaveChanges();
     }
     public void Update(CategoriaProduto Categoria)
     {
       _dbContext.CategoriaProdutos.Update(Categoria);
+      _dbContext.SaveChanges();
     }
   }
 }
