@@ -1,8 +1,4 @@
-using DatabaseAdapters;
-using DatabaseAdapters.Repositories;
-using Domain;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace ControladorPedidos.Controllers;
 
