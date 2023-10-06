@@ -1,13 +1,13 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Domain;
 
 namespace DatabaseAdapters.Repositories
 {
   public class UsuarioCategory : IUsuarioRepository
   {
-
     private readonly DatabaseContext _dbContext;
 
     public UsuarioCategory(DatabaseContext dbContext)
@@ -17,7 +17,7 @@ namespace DatabaseAdapters.Repositories
 
     public async Task<Usuario> GetByLoginAndPassword(string login, string password)
     {
-      return await _dbContext.Usuarios.AsNoTracking().FirstOrDefaultAsync(p => p.Login == login && p.Senha == Crypto.HashPassword(password));
+      return await _dbContext.Usuarios.AsNoTracking().FirstOrDefaultAsync(p => p.Login == login && p.Senha == password);
     }
 
     public void Add(Usuario Usuario)

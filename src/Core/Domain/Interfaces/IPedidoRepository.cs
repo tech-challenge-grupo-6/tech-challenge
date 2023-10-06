@@ -11,7 +11,7 @@ namespace Domain
     Task<IEnumerable<Pedido>> GetByCliente(Cliente cliente);
     Task<Pedido> GetById(int id);
 
-    void UpdateStatus(Status status);
+    void UpdateStatus(Pedido pedido);
     void Add(Pedido pedido);
   }
 }

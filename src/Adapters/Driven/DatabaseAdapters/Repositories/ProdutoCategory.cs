@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Domain;
 
 namespace DatabaseAdapters.Repositories
@@ -20,7 +21,7 @@ namespace DatabaseAdapters.Repositories
     }
     public async Task<IEnumerable<Produto>> GetByCategoria(int categoriaId)
     {
-      return await _dbContext.Produtos.AsNoTracking().Include(p => p.Categoria).Where(c => c.CategoriaProduto.Id == categoriaId).ToListAsync();
+      return await _dbContext.Produtos.AsNoTracking().Include(p => p.Categoria).Where(c => c.Categoria.Id == categoriaId).ToListAsync();
     }
     public async Task<Produto> GetById(int id)
     {

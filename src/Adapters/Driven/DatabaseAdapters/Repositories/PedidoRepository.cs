@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Domain;
 
 namespace DatabaseAdapters.Repositories
@@ -26,7 +27,7 @@ namespace DatabaseAdapters.Repositories
 
     public async Task<IEnumerable<Pedido>> GetByCliente(Cliente cliente)
     {
-      return await _dbContext.Pedidos.AsNoTracking().Include(p => p.Cliente).Where(c => c.Cliente.Id == cliente).ToListAsync();
+      return await _dbContext.Pedidos.AsNoTracking().Include(p => p.Cliente).Where(c => c.Cliente == cliente).ToListAsync();
     }
 
     public async Task<Pedido> GetById(int id)
@@ -39,9 +40,9 @@ namespace DatabaseAdapters.Repositories
       _dbContext.Pedidos.Add(Pedido);
       _dbContext.SaveChanges();
     }
-    public void UpdateStatus(Status status)
+    public void UpdateStatus(Pedido pedido)
     {
-      _dbContext.Pedidos.Update(status);
+      _dbContext.Pedidos.Update(pedido);
       _dbContext.SaveChanges();
     }
   }
