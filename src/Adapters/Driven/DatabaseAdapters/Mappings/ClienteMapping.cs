@@ -11,9 +11,11 @@ public class ClienteMapping : IEntityTypeConfiguration<Cliente>
         builder.ToTable("Cliente");
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Id).ValueGeneratedOnAdd();
-        builder.Property(x => x.Nome).HasMaxLength(100).IsRequired();
-        builder.Property(x => x.Email).HasMaxLength(100).IsRequired();
-        builder.Property(x => x.Cpf).HasMaxLength(11).IsRequired();
+        builder.Property(x => x.Nome).IsRequired().HasMaxLength(50);
+        builder.Property(x => x.Cpf).IsRequired().HasMaxLength(11);
+        builder.Property(x => x.Email).IsRequired().HasMaxLength(50);
+        builder.Property(x => x.CriadoEm).IsRequired();
+        builder.Property(x => x.AtualizadoEm).IsRequired(false);
         builder.HasMany(x => x.Pedidos).WithOne(x => x.Cliente).HasForeignKey(x => x.ClienteId);
     }
 }

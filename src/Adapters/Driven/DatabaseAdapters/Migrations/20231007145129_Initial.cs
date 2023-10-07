@@ -1,12 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using MySql.EntityFrameworkCore.Metadata;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace DatabaseAdapters.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class Initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -18,9 +18,10 @@ namespace DatabaseAdapters.Migrations
                 name: "CategoriaProduto",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    Nome = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false),
+                    Nome = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    CriadoEm = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    AtualizadoEm = table.Column<DateTime>(type: "datetime(6)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -32,11 +33,12 @@ namespace DatabaseAdapters.Migrations
                 name: "Cliente",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    Nome = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false),
+                    Nome = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
                     Cpf = table.Column<string>(type: "varchar(11)", maxLength: 11, nullable: false),
-                    Email = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                    Email = table.Column<string>(type: "varchar(50)", maxLength: 50, nullable: false),
+                    CriadoEm = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    AtualizadoEm = table.Column<DateTime>(type: "datetime(6)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -48,12 +50,13 @@ namespace DatabaseAdapters.Migrations
                 name: "Usuario",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false),
                     Nome = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
                     Login = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
                     Senha = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
-                    Email = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                    Email = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
+                    CriadoEm = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    AtualizadoEm = table.Column<DateTime>(type: "datetime(6)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -65,13 +68,14 @@ namespace DatabaseAdapters.Migrations
                 name: "Produto",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false),
                     Nome = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
-                    CategoriaId = table.Column<int>(type: "int", nullable: false),
+                    CategoriaId = table.Column<Guid>(type: "char(36)", nullable: false),
                     Preco = table.Column<double>(type: "double", nullable: false),
-                    Descricao = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
-                    Imagem = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                    Descricao = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: false),
+                    Imagem = table.Column<string>(type: "varchar(500)", maxLength: 500, nullable: false),
+                    CriadoEm = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    AtualizadoEm = table.Column<DateTime>(type: "datetime(6)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -89,12 +93,13 @@ namespace DatabaseAdapters.Migrations
                 name: "Pedido",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
-                    ClienteId = table.Column<int>(type: "int", nullable: false),
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false),
+                    ClienteId = table.Column<Guid>(type: "char(36)", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     ValorTotal = table.Column<double>(type: "double", nullable: false),
-                    MetodoPagamento = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false)
+                    MetodoPagamento = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
+                    CriadoEm = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    AtualizadoEm = table.Column<DateTime>(type: "datetime(6)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -112,8 +117,8 @@ namespace DatabaseAdapters.Migrations
                 name: "PedidoProduto",
                 columns: table => new
                 {
-                    PedidosId = table.Column<int>(type: "int", nullable: false),
-                    ProdutosId = table.Column<int>(type: "int", nullable: false)
+                    PedidosId = table.Column<Guid>(type: "char(36)", nullable: false),
+                    ProdutosId = table.Column<Guid>(type: "char(36)", nullable: false)
                 },
                 constraints: table =>
                 {

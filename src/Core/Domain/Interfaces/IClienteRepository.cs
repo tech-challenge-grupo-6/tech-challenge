@@ -6,10 +6,10 @@ namespace Domain
 {
   public interface IClienteRepository
   {
-    Task<Cliente> GetById(int id);
-    Task<Cliente> GetByCpf(string cpf);
+    Task<Cliente?> GetById(Guid id);
+    Task<Cliente?> GetByCpf(string cpf);
 
-    void Add(Cliente cliente);
-    void Update(Cliente cliente);
+    Task Add(Cliente cliente);
+    Task Update(Cliente cliente);
   }
 }

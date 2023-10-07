@@ -7,8 +7,8 @@ namespace Domain
   public interface IProdutoRepository
   {
     Task<IEnumerable<Produto>> GetAll();
-    Task<Produto> GetById(int id);
-    Task<IEnumerable<Produto>> GetByCategoria(int categoriaId);
+    Task<Produto> GetById(Guid id);
+    Task<IEnumerable<Produto>> GetByCategoria(Guid categoriaId);
 
     void Add(Produto produto);
     void Update(Produto produto);
