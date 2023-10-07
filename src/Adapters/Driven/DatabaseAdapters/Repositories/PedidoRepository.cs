@@ -6,11 +6,11 @@ using Domain;
 
 namespace DatabaseAdapters.Repositories
 {
-  public class PedidoCategory : IPedidoRepository
+  public class PedidoRepository : IPedidoRepository
   {
     private readonly DatabaseContext _dbContext;
 
-    public PedidoCategory(DatabaseContext dbContext)
+    public PedidoRepository(DatabaseContext dbContext)
     {
       _dbContext = dbContext;
     }

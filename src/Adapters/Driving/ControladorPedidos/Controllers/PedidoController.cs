@@ -1,3 +1,6 @@
+using Application.UseCases;
+using Domain;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ControladorPedidos.Controllers;
@@ -7,13 +10,19 @@ namespace ControladorPedidos.Controllers;
 public class PedidoController : ControllerBase
 {
 
+    private readonly IPedidoUseCase _pedidoUseCase;
+    
+    public PedidoController(IPedidoUseCase pedidoUseCase){
+        _pedidoUseCase = pedidoUseCase;
+    }
+
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public IEnumerable<string> Get()
+    public async Task<IActionResult> Get()
     {
-        return new string[] { "value1", "value2" };
+        return Ok(await _pedidoUseCase.TodosPedidos());
     }
 
     [HttpGet("{id}")]

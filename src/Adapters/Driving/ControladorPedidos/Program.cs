@@ -1,4 +1,7 @@
+using Application.UseCases;
 using DatabaseAdapters.Configuration;
+using DatabaseAdapters.Repositories;
+using Domain;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +12,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDatabase(builder.Configuration);
+
+builder.Services.AddTransient<IPedidoRepository, PedidoRepository>();
+builder.Services.AddTransient<IPedidoUseCase, PedidoUseCase>();
 
 var app = builder.Build();
 
