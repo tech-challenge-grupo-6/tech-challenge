@@ -15,35 +15,38 @@ namespace DatabaseAdapters.Repositories
       _dbContext = dbContext;
     }
 
-    public async Task<IEnumerable<Pedido>> GetAll()
+    public async Task<IEnumerable<Pedido?>> GetAll()
     {
       return await _dbContext.Pedidos.AsNoTracking().ToListAsync();
     }
 
-    public async Task<IEnumerable<Pedido>> GetByStatus(Status status)
+    public async Task<IEnumerable<Pedido?>> GetByStatus(Status status)
     {
       return await _dbContext.Pedidos.AsNoTracking().Include(p => p.Status).Where(s => s.Status == status).ToListAsync();
     }
 
-    public async Task<IEnumerable<Pedido>> GetByCliente(Cliente cliente)
+    public async Task<IEnumerable<Pedido?>> GetByCliente(Cliente cliente)
     {
       return await _dbContext.Pedidos.AsNoTracking().Include(p => p.Cliente).Where(c => c.Cliente == cliente).ToListAsync();
     }
 
-    public async Task<Pedido> GetById(Guid id)
+    public async Task<Pedido?> GetById(Guid id)
     {
-      return await _dbContext.Pedidos.FindAsync(id);
+      return await _dbContext
+        .Pedidos
+        .Include(p => p.Produtos)
+        .FirstOrDefaultAsync(p => p.Id == id);
     }
 
-    public void Add(Pedido Pedido)
+    public async Task Add(Pedido Pedido)
     {
       _dbContext.Pedidos.Add(Pedido);
-      _dbContext.SaveChanges();
+      await _dbContext.SaveChangesAsync();
     }
-    public void UpdateStatus(Pedido pedido)
+    public async Task UpdateStatus(Pedido pedido)
     {
       _dbContext.Pedidos.Update(pedido);
-      _dbContext.SaveChanges();
+      await _dbContext.SaveChangesAsync();
     }
   }
 }
