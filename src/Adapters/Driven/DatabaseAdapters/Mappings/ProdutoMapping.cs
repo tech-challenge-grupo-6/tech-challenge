@@ -11,12 +11,12 @@ public class ProdutoMapping : IEntityTypeConfiguration<Produto>
         builder.ToTable("Produto");
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Id).ValueGeneratedOnAdd();
-        builder.Property(x => x.Nome).HasMaxLength(100).IsRequired();
-        builder.Property(x => x.Descricao).HasMaxLength(100).IsRequired();
+        builder.Property(x => x.Nome).IsRequired().HasMaxLength(100);
         builder.Property(x => x.Preco).IsRequired();
-        builder.Property(x => x.Imagem).HasMaxLength(100).IsRequired();
-        builder.Property(x => x.CategoriaId).IsRequired();
+        builder.Property(x => x.Descricao).IsRequired().HasMaxLength(500);
+        builder.Property(x => x.Imagem).IsRequired().HasMaxLength(500);
+        builder.Property(x => x.CriadoEm).IsRequired();
+        builder.Property(x => x.AtualizadoEm).IsRequired(false);
         builder.HasOne(x => x.Categoria).WithMany(x => x.Produtos).HasForeignKey(x => x.CategoriaId);
-        builder.HasMany(x => x.Pedidos).WithMany(x => x.Produtos);
     }
 }

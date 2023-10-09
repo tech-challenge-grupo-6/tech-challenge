@@ -16,5 +16,7 @@ public class PedidoMapping : IEntityTypeConfiguration<Pedido>
         builder.Property(x => x.ValorTotal).IsRequired();
         builder.Property(x => x.MetodoPagamento).HasMaxLength(100).IsRequired();
         builder.HasMany(x => x.Produtos).WithMany(x => x.Pedidos);
+        builder.Property(x => x.CriadoEm).IsRequired();
+        builder.Property(x => x.AtualizadoEm).IsRequired(false);
     }
 }

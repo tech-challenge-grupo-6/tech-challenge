@@ -1,10 +1,9 @@
 ﻿namespace Domain
 {
-    public class Pedido
+    public class Pedido : EntityBase
     {
-        public int Id { get; set; }
         public virtual Cliente Cliente { get; set; } = null!;
-        public int ClienteId { get; set; }
+        public Guid ClienteId { get; set; }
         public Status Status { get; set; }
         public virtual ICollection<Produto> Produtos { get; set; } = null!;
         public double ValorTotal { get; set; }

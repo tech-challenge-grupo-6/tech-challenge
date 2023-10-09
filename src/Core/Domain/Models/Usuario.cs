@@ -1,8 +1,7 @@
 ﻿namespace Domain
 {
-    public class Usuario
+    public class Usuario : EntityBase
     {
-        public int Id { get; set; }
         public string Nome { get; set; } = null!;
         public string Login { get; set; } = null!;
         public string Senha { get; set; } = null!;

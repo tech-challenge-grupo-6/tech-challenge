@@ -19,7 +19,7 @@ namespace DatabaseAdapters.Repositories
     {
       return await _dbContext.CategoriaProdutos.AsNoTracking().ToListAsync();
     }
-    public async Task<CategoriaProduto> GetById(int id)
+    public async Task<CategoriaProduto> GetById(Guid id)
     {
       return await _dbContext.CategoriaProdutos.FindAsync(id);
     }

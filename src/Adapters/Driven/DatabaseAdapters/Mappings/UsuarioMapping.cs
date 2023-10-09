@@ -11,9 +11,11 @@ public class UsuarioMapping : IEntityTypeConfiguration<Usuario>
         builder.ToTable("Usuario");
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Id).ValueGeneratedOnAdd();
-        builder.Property(x => x.Login).HasMaxLength(100).IsRequired();
-        builder.Property(x => x.Nome).HasMaxLength(100).IsRequired();
-        builder.Property(x => x.Email).HasMaxLength(100).IsRequired();
-        builder.Property(x => x.Senha).HasMaxLength(100).IsRequired();
+        builder.Property(x => x.Nome).IsRequired().HasMaxLength(100);
+        builder.Property(x => x.Login).IsRequired().HasMaxLength(100);
+        builder.Property(x => x.Senha).IsRequired().HasMaxLength(100);
+        builder.Property(x => x.Email).IsRequired().HasMaxLength(100);
+        builder.Property(x => x.CriadoEm).IsRequired();
+        builder.Property(x => x.AtualizadoEm).IsRequired(false);
     }
 }

@@ -9,7 +9,7 @@ namespace Domain
     Task<IEnumerable<Pedido>> GetAll();
     Task<IEnumerable<Pedido>> GetByStatus(Status status);
     Task<IEnumerable<Pedido>> GetByCliente(Cliente cliente);
-    Task<Pedido> GetById(int id);
+    Task<Pedido> GetById(Guid id);
 
     void UpdateStatus(Pedido pedido);
     void Add(Pedido pedido);
