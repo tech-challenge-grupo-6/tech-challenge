@@ -46,14 +46,7 @@ public class ClienteController : ControllerBase
         try
         {
             var cliente = await _clienteUseCase.BuscarPorCpf(cpf);
-            if (cliente != null)
-            {
-                return Ok(cliente);
-            }
-            else
-            {
-                return NotFound("Cliente não encontrado");
-            }
+            return Ok(cliente);
         }
         catch (ArgumentException ex)
         {
