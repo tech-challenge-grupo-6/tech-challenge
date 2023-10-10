@@ -47,6 +47,23 @@ namespace DatabaseAdapters.Migrations
                 .Annotation("MySQL:Charset", "utf8mb4");
 
             migrationBuilder.CreateTable(
+                name: "Pagamento",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "char(36)", nullable: false),
+                    PedidoId = table.Column<Guid>(type: "char(36)", nullable: false),
+                    Valor = table.Column<double>(type: "double", nullable: false),
+                    MetodoPagamento = table.Column<int>(type: "int", nullable: false),
+                    CriadoEm = table.Column<DateTime>(type: "datetime(6)", nullable: false),
+                    AtualizadoEm = table.Column<DateTime>(type: "datetime(6)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Pagamento", x => x.Id);
+                })
+                .Annotation("MySQL:Charset", "utf8mb4");
+
+            migrationBuilder.CreateTable(
                 name: "Usuario",
                 columns: table => new
                 {
@@ -94,10 +111,10 @@ namespace DatabaseAdapters.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false),
-                    ClienteId = table.Column<Guid>(type: "char(36)", nullable: false),
+                    ClienteId = table.Column<Guid>(type: "char(36)", nullable: true),
                     Status = table.Column<int>(type: "int", nullable: false),
                     ValorTotal = table.Column<double>(type: "double", nullable: false),
-                    MetodoPagamento = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
+                    PagamentoId = table.Column<Guid>(type: "char(36)", nullable: true),
                     CriadoEm = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     AtualizadoEm = table.Column<DateTime>(type: "datetime(6)", nullable: true)
                 },
@@ -108,8 +125,12 @@ namespace DatabaseAdapters.Migrations
                         name: "FK_Pedido_Cliente_ClienteId",
                         column: x => x.ClienteId,
                         principalTable: "Cliente",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Pedido_Pagamento_PagamentoId",
+                        column: x => x.PagamentoId,
+                        principalTable: "Pagamento",
+                        principalColumn: "Id");
                 })
                 .Annotation("MySQL:Charset", "utf8mb4");
 
@@ -144,6 +165,12 @@ namespace DatabaseAdapters.Migrations
                 column: "ClienteId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Pedido_PagamentoId",
+                table: "Pedido",
+                column: "PagamentoId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PedidoProduto_ProdutosId",
                 table: "PedidoProduto",
                 column: "ProdutosId");
@@ -171,6 +198,9 @@ namespace DatabaseAdapters.Migrations
 
             migrationBuilder.DropTable(
                 name: "Cliente");
+
+            migrationBuilder.DropTable(
+                name: "Pagamento");
 
             migrationBuilder.DropTable(
                 name: "CategoriaProduto");
