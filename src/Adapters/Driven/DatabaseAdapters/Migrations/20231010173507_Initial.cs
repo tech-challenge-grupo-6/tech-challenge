@@ -111,17 +111,10 @@ namespace DatabaseAdapters.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "char(36)", nullable: false),
-<<<<<<<< HEAD:src/Adapters/Driven/DatabaseAdapters/Migrations/20231008002910_Initial.cs
                     ClienteId = table.Column<Guid>(type: "char(36)", nullable: true),
                     Status = table.Column<int>(type: "int", nullable: false),
                     ValorTotal = table.Column<double>(type: "double", nullable: false),
                     PagamentoId = table.Column<Guid>(type: "char(36)", nullable: true),
-========
-                    ClienteId = table.Column<Guid>(type: "char(36)", nullable: false),
-                    Status = table.Column<int>(type: "int", nullable: false),
-                    ValorTotal = table.Column<double>(type: "double", nullable: false),
-                    MetodoPagamento = table.Column<string>(type: "varchar(100)", maxLength: 100, nullable: false),
->>>>>>>> develop:src/Adapters/Driven/DatabaseAdapters/Migrations/20231007145129_Initial.cs
                     CriadoEm = table.Column<DateTime>(type: "datetime(6)", nullable: false),
                     AtualizadoEm = table.Column<DateTime>(type: "datetime(6)", nullable: true)
                 },

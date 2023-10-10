@@ -11,11 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DatabaseAdapters.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-<<<<<<<< HEAD:src/Adapters/Driven/DatabaseAdapters/Migrations/20231008002910_Initial.Designer.cs
-    [Migration("20231008002910_Initial")]
-========
-    [Migration("20231007145129_Initial")]
->>>>>>>> develop:src/Adapters/Driven/DatabaseAdapters/Migrations/20231007145129_Initial.Designer.cs
+    [Migration("20231010173507_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -114,15 +110,6 @@ namespace DatabaseAdapters.Migrations
 
                     b.Property<DateTime?>("AtualizadoEm")
                         .HasColumnType("datetime(6)");
-<<<<<<<< HEAD:src/Adapters/Driven/DatabaseAdapters/Migrations/20231008002910_Initial.Designer.cs
-========
-
-                    b.Property<Guid>("ClienteId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<DateTime>("CriadoEm")
-                        .HasColumnType("datetime(6)");
->>>>>>>> develop:src/Adapters/Driven/DatabaseAdapters/Migrations/20231007145129_Initial.Designer.cs
 
                     b.Property<Guid?>("ClienteId")
                         .HasColumnType("char(36)");
