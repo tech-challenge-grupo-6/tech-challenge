@@ -22,7 +22,7 @@ namespace DatabaseAdapters.Repositories
 
     public async Task<Cliente?> GetByCpf(string cpf)
     {
-      return await _dbContext.Clientes.AsNoTracking().FirstOrDefaultAsync(c => c.Cpf == cpf);
+      return await _dbContext.Clientes.FirstOrDefaultAsync(c => c.Cpf == cpf);
     }
 
     public async Task Add(Cliente Cliente)

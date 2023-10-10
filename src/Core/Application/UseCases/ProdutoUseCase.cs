@@ -5,12 +5,11 @@ namespace Application.UseCases;
 
 public class ProdutoUseCase : IProdutoUseCase
 {
-
   private readonly IProdutoRepository _produtoRepository;
-  private readonly ILogger<ClienteUseCase> _logger;
-  public ProdutoUseCase(IProdutoRepository ProdutoRepository, ILogger<ClienteUseCase> logger)
+  private readonly ILogger<ProdutoUseCase> _logger;
+  public ProdutoUseCase(IProdutoRepository produtoRepository, ILogger<ProdutoUseCase> logger)
   {
-    _produtoRepository = ProdutoRepository;
+    _produtoRepository = produtoRepository;
     _logger = logger;
   }
 

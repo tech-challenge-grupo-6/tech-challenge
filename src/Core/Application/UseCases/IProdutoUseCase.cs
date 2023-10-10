@@ -1,4 +1,3 @@
-
 using Domain;
 
 namespace Application.UseCases;

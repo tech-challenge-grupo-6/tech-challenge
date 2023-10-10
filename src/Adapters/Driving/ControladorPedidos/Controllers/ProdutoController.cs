@@ -8,7 +8,6 @@ namespace ControladorPedidos.Controllers;
 [Route("[controller]")]
 public class ProdutoController : ControllerBase
 {
-
     private readonly ILogger<ProdutoController> _logger;
     private readonly IProdutoUseCase _produtoUseCase;
 
