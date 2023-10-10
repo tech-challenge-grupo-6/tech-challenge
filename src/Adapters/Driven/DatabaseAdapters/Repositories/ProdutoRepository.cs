@@ -6,22 +6,22 @@ using Domain;
 
 namespace DatabaseAdapters.Repositories
 {
-  public class ProdutoCategory : IProdutoRepository
+  public class ProdutoRepository : IProdutoRepository
   {
     private readonly DatabaseContext _dbContext;
 
-    public ProdutoCategory(DatabaseContext dbContext)
+    public ProdutoRepository(DatabaseContext dbContext)
     {
       _dbContext = dbContext;
     }
 
     public async Task<IEnumerable<Produto>> GetAll()
     {
-      return await _dbContext.Produtos.AsNoTracking().ToListAsync();
+      return await _dbContext.Produtos.ToListAsync();
     }
     public async Task<IEnumerable<Produto>> GetByCategoria(Guid categoriaId)
     {
-      return await _dbContext.Produtos.AsNoTracking().Include(p => p.Categoria).Where(c => c.Categoria.Id == categoriaId).ToListAsync();
+      return await _dbContext.Produtos.Where(p => p.CategoriaId == categoriaId).ToListAsync();
     }
     public async Task<Produto> GetById(Guid id)
     {

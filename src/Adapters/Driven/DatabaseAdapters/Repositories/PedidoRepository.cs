@@ -17,17 +17,17 @@ namespace DatabaseAdapters.Repositories
 
     public async Task<IEnumerable<Pedido?>> GetAll()
     {
-      return await _dbContext.Pedidos.AsNoTracking().ToListAsync();
+      return await _dbContext.Pedidos.ToListAsync();
     }
 
     public async Task<IEnumerable<Pedido?>> GetByStatus(Status status)
     {
-      return await _dbContext.Pedidos.AsNoTracking().Include(p => p.Status).Where(s => s.Status == status).ToListAsync();
+      return await _dbContext.Pedidos.Where(p => p.Status == status).ToListAsync();
     }
 
-    public async Task<IEnumerable<Pedido?>> GetByCliente(Cliente cliente)
+    public async Task<IEnumerable<Pedido>> GetByCliente(Guid clienteId)
     {
-      return await _dbContext.Pedidos.AsNoTracking().Include(p => p.Cliente).Where(c => c.Cliente == cliente).ToListAsync();
+      return await _dbContext.Pedidos.Where(p => p.ClienteId == clienteId).ToListAsync();
     }
 
     public async Task<Pedido?> GetById(Guid id)

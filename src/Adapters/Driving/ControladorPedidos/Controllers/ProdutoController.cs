@@ -1,3 +1,5 @@
+using Application.UseCases;
+using Domain;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ControladorPedidos.Controllers;
@@ -6,8 +8,16 @@ namespace ControladorPedidos.Controllers;
 [Route("[controller]")]
 public class ProdutoController : ControllerBase
 {
+    private readonly ILogger<ProdutoController> _logger;
+    private readonly IProdutoUseCase _produtoUseCase;
 
-    [HttpGet]
+    public ProdutoController(ILogger<ProdutoController> logger, IProdutoUseCase produtoUseCase = null)
+    {
+        _logger = logger;
+        _produtoUseCase = produtoUseCase;
+    }
+
+    /*[HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -23,6 +33,30 @@ public class ProdutoController : ControllerBase
     public string Get(int id)
     {
         return "value";
+    }*/
+
+    [HttpGet("{categoriaId}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> ListarPorCategoria(Guid categoriaId)
+    {
+        _logger.LogInformation("Listando produtos por categoria");
+        try
+        {
+            var produtos = await _produtoUseCase.TodosProdutosPorCategoria(categoriaId);
+            return Ok(produtos);
+        }
+        catch (NotFoundException e)
+        {
+            return NotFound(e.Message);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Listando produtos por categoria");
+            return StatusCode(StatusCodes.Status500InternalServerError, "Erro interno");
+        }
     }
 
     [HttpPost]

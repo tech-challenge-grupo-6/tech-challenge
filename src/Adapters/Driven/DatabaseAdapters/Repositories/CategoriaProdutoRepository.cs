@@ -17,7 +17,7 @@ namespace DatabaseAdapters.Repositories
 
     public async Task<IEnumerable<CategoriaProduto>> GetAll()
     {
-      return await _dbContext.CategoriaProdutos.AsNoTracking().ToListAsync();
+      return await _dbContext.CategoriaProdutos.ToListAsync();
     }
     public async Task<CategoriaProduto> GetById(Guid id)
     {

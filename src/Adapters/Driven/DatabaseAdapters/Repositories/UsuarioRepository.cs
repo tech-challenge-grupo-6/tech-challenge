@@ -17,7 +17,7 @@ namespace DatabaseAdapters.Repositories
 
     public async Task<Usuario> GetByLoginAndPassword(string login, string password)
     {
-      return await _dbContext.Usuarios.AsNoTracking().FirstOrDefaultAsync(p => p.Login == login && p.Senha == password);
+      return await _dbContext.Usuarios.FirstOrDefaultAsync(p => p.Login == login && p.Senha == password);
     }
 
     public void Add(Usuario Usuario)
