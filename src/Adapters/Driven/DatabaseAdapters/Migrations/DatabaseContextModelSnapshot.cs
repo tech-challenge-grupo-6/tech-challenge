@@ -107,6 +107,15 @@ namespace DatabaseAdapters.Migrations
 
                     b.Property<DateTime?>("AtualizadoEm")
                         .HasColumnType("datetime(6)");
+<<<<<<< HEAD
+=======
+
+                    b.Property<Guid>("ClienteId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime>("CriadoEm")
+                        .HasColumnType("datetime(6)");
+>>>>>>> develop
 
                     b.Property<Guid?>("ClienteId")
                         .HasColumnType("char(36)");
