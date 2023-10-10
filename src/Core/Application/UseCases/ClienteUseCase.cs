@@ -31,7 +31,6 @@ public class ClienteUseCase : IClienteUseCase
       throw;
     }
   }
-
   public async Task<Cliente> BuscarPorCpf(string cpf)
   {
     _logger.LogInformation("Buscando cliente pelo CPF");

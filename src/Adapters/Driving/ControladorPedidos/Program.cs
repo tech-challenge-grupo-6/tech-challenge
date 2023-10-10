@@ -15,6 +15,8 @@ builder.Services.AddDatabase(builder.Configuration);
 
 builder.Services.AddTransient<IPedidoRepository, PedidoRepository>();
 builder.Services.AddTransient<IPedidoUseCase, PedidoUseCase>();
+builder.Services.AddTransient<IClienteRepository, ClienteRepository>();
+builder.Services.AddTransient<IClienteUseCase, ClienteUseCase>();
 
 var app = builder.Build();
 

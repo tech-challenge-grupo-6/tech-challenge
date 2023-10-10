@@ -15,25 +15,25 @@ namespace DatabaseAdapters.Repositories
       _dbContext = dbContext;
     }
 
-    public async Task<Cliente> GetById(int id)
+    public async Task<Cliente?> GetById(Guid id)
     {
-      return await _dbContext.Clientes.FindAsync(id);
+      return await _dbContext.Clientes.FirstOrDefaultAsync(c => c.Id == id);
     }
 
-    public async Task<Cliente> GetByCpf(string cpf)
+    public async Task<Cliente?> GetByCpf(string cpf)
     {
       return await _dbContext.Clientes.AsNoTracking().FirstOrDefaultAsync(c => c.Cpf == cpf);
     }
 
-    public void Add(Cliente Cliente)
+    public async Task Add(Cliente Cliente)
     {
       _dbContext.Clientes.Add(Cliente);
-      _dbContext.SaveChanges();
+      await _dbContext.SaveChangesAsync();
     }
-    public void Update(Cliente Cliente)
+    public async Task Update(Cliente Cliente)
     {
       _dbContext.Clientes.Update(Cliente);
-      _dbContext.SaveChanges();
+      await _dbContext.SaveChangesAsync();
     }
   }
 }

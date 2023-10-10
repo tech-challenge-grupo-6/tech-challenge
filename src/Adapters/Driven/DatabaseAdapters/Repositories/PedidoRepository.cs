@@ -30,7 +30,7 @@ namespace DatabaseAdapters.Repositories
       return await _dbContext.Pedidos.AsNoTracking().Include(p => p.Cliente).Where(c => c.Cliente == cliente).ToListAsync();
     }
 
-    public async Task<Pedido> GetById(int id)
+    public async Task<Pedido> GetById(Guid id)
     {
       return await _dbContext.Pedidos.FindAsync(id);
     }
