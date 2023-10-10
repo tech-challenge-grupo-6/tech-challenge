@@ -17,7 +17,7 @@ public class ClienteController : ControllerBase
         _clienteUseCase = clienteUseCase;
     }
 
-    [HttpGet]
+    /*[HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -33,6 +33,35 @@ public class ClienteController : ControllerBase
     public string Get(int id)
     {
         return "value";
+    }*/
+
+    [HttpGet("{cpf}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> BuscarPorCpf(string cpf)
+    {
+        _logger.LogInformation("Buscando cliente pelo cpf");
+        try
+        {
+            var cliente = await _clienteUseCase.BuscarPorCpf(cpf);
+            return Ok(cliente);
+        }
+        catch (ArgumentException ex)
+        {
+            _logger.LogError(ex, "Erro ao buscar cliente pelo cpf");
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        }
+        catch (NotFoundException e)
+        {
+            return NotFound(e.Message);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Buscando cliente pelo cpf");
+            return StatusCode(StatusCodes.Status500InternalServerError, "Erro interno");
+        }
     }
 
     [HttpPost]
