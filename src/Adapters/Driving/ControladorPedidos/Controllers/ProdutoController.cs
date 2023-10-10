@@ -46,14 +46,7 @@ public class ProdutoController : ControllerBase
         try
         {
             var produtos = await _produtoUseCase.TodosProdutosPorCategoria(categoriaId);
-            if (produtos != null)
-            {
-                return Ok(produtos);
-            }
-            else
-            {
-                return NotFound("Produtos não encontrados");
-            }
+            return Ok(produtos);
         }
         catch (NotFoundException e)
         {
