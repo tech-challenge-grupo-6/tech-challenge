@@ -17,6 +17,7 @@ public class DatabaseContext : DbContext
     public DbSet<Pedido> Pedidos { get; set; } = null!;
     public DbSet<Produto> Produtos { get; set; } = null!;
     public DbSet<Usuario> Usuarios { get; set; } = null!;
+    public DbSet<Pagamento> Pagamentos { get; set; } = null!;
 
     override protected void OnModelCreating(ModelBuilder modelBuilder)
     {

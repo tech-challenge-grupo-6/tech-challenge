@@ -19,6 +19,8 @@ builder.Services.AddTransient<IClienteRepository, ClienteRepository>();
 builder.Services.AddTransient<IClienteUseCase, ClienteUseCase>();
 builder.Services.AddTransient<IProdutoRepository, ProdutoRepository>();
 builder.Services.AddTransient<IProdutoUseCase, ProdutoUseCase>();
+builder.Services.AddTransient<IPagamentoUseCase, PagamentoUseCase>();
+builder.Services.AddTransient<IPagamentoRepository, PagamentoRepository>();
 
 var app = builder.Build();
 

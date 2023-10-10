@@ -73,6 +73,32 @@ namespace DatabaseAdapters.Migrations
                     b.ToTable("Cliente", (string)null);
                 });
 
+            modelBuilder.Entity("Domain.Pagamento", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("char(36)");
+
+                    b.Property<DateTime?>("AtualizadoEm")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<DateTime>("CriadoEm")
+                        .HasColumnType("datetime(6)");
+
+                    b.Property<int>("MetodoPagamento")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("PedidoId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<double>("Valor")
+                        .HasColumnType("double");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Pagamento", (string)null);
+                });
+
             modelBuilder.Entity("Domain.Pedido", b =>
                 {
                     b.Property<Guid>("Id")
@@ -82,16 +108,14 @@ namespace DatabaseAdapters.Migrations
                     b.Property<DateTime?>("AtualizadoEm")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<Guid>("ClienteId")
+                    b.Property<Guid?>("ClienteId")
                         .HasColumnType("char(36)");
 
                     b.Property<DateTime>("CriadoEm")
                         .HasColumnType("datetime(6)");
 
-                    b.Property<string>("MetodoPagamento")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("varchar(100)");
+                    b.Property<Guid?>("PagamentoId")
+                        .HasColumnType("char(36)");
 
                     b.Property<int>("Status")
                         .HasColumnType("int");
@@ -102,6 +126,9 @@ namespace DatabaseAdapters.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ClienteId");
+
+                    b.HasIndex("PagamentoId")
+                        .IsUnique();
 
                     b.ToTable("Pedido", (string)null);
                 });
@@ -202,11 +229,15 @@ namespace DatabaseAdapters.Migrations
                 {
                     b.HasOne("Domain.Cliente", "Cliente")
                         .WithMany("Pedidos")
-                        .HasForeignKey("ClienteId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ClienteId");
+
+                    b.HasOne("Domain.Pagamento", "Pagamento")
+                        .WithOne("Pedido")
+                        .HasForeignKey("Domain.Pedido", "PagamentoId");
 
                     b.Navigation("Cliente");
+
+                    b.Navigation("Pagamento");
                 });
 
             modelBuilder.Entity("Domain.Produto", b =>
@@ -243,6 +274,12 @@ namespace DatabaseAdapters.Migrations
             modelBuilder.Entity("Domain.Cliente", b =>
                 {
                     b.Navigation("Pedidos");
+                });
+
+            modelBuilder.Entity("Domain.Pagamento", b =>
+                {
+                    b.Navigation("Pedido")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

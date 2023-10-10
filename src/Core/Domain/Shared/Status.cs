@@ -2,6 +2,7 @@
 {
     public enum Status
     {
+        Criado,
         Recebido,
         EmProgresso,
         Pronto,
