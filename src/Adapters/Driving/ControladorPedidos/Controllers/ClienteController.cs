@@ -17,7 +17,7 @@ public class ClienteController : ControllerBase
         _clienteUseCase = clienteUseCase;
     }
 
-    [HttpGet]
+    /*[HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -33,7 +33,7 @@ public class ClienteController : ControllerBase
     public string Get(int id)
     {
         return "value";
-    }
+    }*/
 
     [HttpGet("{cpf}")]
     [ProducesResponseType(StatusCodes.Status200OK)]

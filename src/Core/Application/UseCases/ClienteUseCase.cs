@@ -33,7 +33,7 @@ public class ClienteUseCase : IClienteUseCase
   }
   public async Task<Cliente> BuscarPorCpf(string cpf)
   {
-    _logger.LogInformation("Buscando cliente pelo CPF");
+    _logger.LogInformation("Buscando cliente pelo cpf");
 
     try
     {
