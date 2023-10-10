@@ -42,7 +42,10 @@ public class ClienteUseCase : IClienteUseCase
         var result = await _clienteRepository.GetByCpf(cpf) ?? throw new NotFoundException("Cliente não encontrado");
         return result;
       }
-      return null;
+      else
+      {
+        throw new ArgumentException("Cpf inválido");
+      }
     }
     catch (Exception ex)
     {

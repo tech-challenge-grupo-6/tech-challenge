@@ -55,6 +55,11 @@ public class ClienteController : ControllerBase
                 return NotFound("Cliente não encontrado");
             }
         }
+        catch (ArgumentException ex)
+        {
+            _logger.LogError(ex, "Erro ao buscar cliente pelo cpf");
+            return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+        }
         catch (NotFoundException e)
         {
             return NotFound(e.Message);
