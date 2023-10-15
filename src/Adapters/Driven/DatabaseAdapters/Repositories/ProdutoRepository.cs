@@ -26,10 +26,10 @@ namespace DatabaseAdapters.Repositories
     {
       return await _dbContext.Produtos.FindAsync(id);
     }
-    public void Add(Produto Produto)
+    public async Task Add(Produto Produto)
     {
       _dbContext.Produtos.Add(Produto);
-      _dbContext.SaveChanges();
+      await _dbContext.SaveChangesAsync();
     }
     public void UpdateProduct(Produto Produto)
     {

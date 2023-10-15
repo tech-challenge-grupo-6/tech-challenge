@@ -65,4 +65,22 @@ public class ProdutoUseCase : IProdutoUseCase
       throw;
     }
   }
+
+  public async Task CriarProduto(Produto produto)
+  {
+    _logger.LogInformation("Criando Produto");
+
+    try
+    {
+      if (ProdutoValidador.IsValid(produto))
+      {
+        await _produtoRepository.Add(produto);
+      }
+    }
+    catch (Exception ex)
+    {
+      _logger.LogInformation(ex, "Erro ao criar produto");
+      throw;
+    }
+  }
 }
