@@ -14,7 +14,6 @@ namespace DatabaseAdapters.Repositories
     {
       _dbContext = dbContext;
     }
-
     public async Task<IEnumerable<Produto>> GetAll()
     {
       return await _dbContext.Produtos.ToListAsync();
@@ -27,18 +26,16 @@ namespace DatabaseAdapters.Repositories
     {
       return await _dbContext.Produtos.FindAsync(id);
     }
-
     public void Add(Produto Produto)
     {
       _dbContext.Produtos.Add(Produto);
       _dbContext.SaveChanges();
     }
-    public void Update(Produto Produto)
+    public void UpdateProduct(Produto Produto)
     {
       _dbContext.Produtos.Update(Produto);
       _dbContext.SaveChanges();
     }
-
     public void Add(CategoriaProduto Categoria)
     {
       _dbContext.CategoriaProdutos.Add(Categoria);
@@ -47,6 +44,11 @@ namespace DatabaseAdapters.Repositories
     public void Update(CategoriaProduto Categoria)
     {
       _dbContext.CategoriaProdutos.Update(Categoria);
+      _dbContext.SaveChanges();
+    }
+    public void Remove(Produto produto)
+    {
+      _dbContext.Produtos.Remove(produto);
       _dbContext.SaveChanges();
     }
   }
