@@ -36,12 +36,16 @@ public class ProdutoUseCase : IProdutoUseCase
     try
     {
       var result = await _produtoRepository.GetById(id) ?? throw new NotFoundException("Produto não encontrado");
-      result.Nome = produto.Nome;
-      result.Preco = produto.Preco;
-      result.Descricao = produto.Descricao;
-      result.Imagem = produto.Imagem;
-      result.CategoriaId = produto.CategoriaId;
-      _produtoRepository.UpdateProduct(result);
+
+      if (ProdutoValidador.IsValid(produto))
+      {
+        result.Nome = produto.Nome;
+        result.Preco = produto.Preco;
+        result.Descricao = produto.Descricao;
+        result.Imagem = produto.Imagem;
+        result.CategoriaId = produto.CategoriaId;
+        _produtoRepository.UpdateProduct(result);
+      }
     }
     catch (Exception ex)
     {
