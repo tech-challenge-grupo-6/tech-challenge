@@ -8,7 +8,7 @@ namespace Domain
     Task<IEnumerable<CategoriaProduto>> GetAll();
     Task<CategoriaProduto> GetById(Guid id);
 
-    void Add(CategoriaProduto categoria);
-    void Update(CategoriaProduto categoria);
+    Task Add(CategoriaProduto categoria);
+    Task Update(CategoriaProduto categoria);
   }
 }

@@ -23,15 +23,15 @@ namespace DatabaseAdapters.Repositories
     {
       return await _dbContext.CategoriaProdutos.FindAsync(id);
     }
-    public void Add(CategoriaProduto CategoriaProduto)
+    public async Task Add(CategoriaProduto CategoriaProduto)
     {
       _dbContext.CategoriaProdutos.Add(CategoriaProduto);
-      _dbContext.SaveChanges();
+      await _dbContext.SaveChangesAsync();
     }
-    public void Update(CategoriaProduto CategoriaProduto)
+    public async Task Update(CategoriaProduto CategoriaProduto)
     {
       _dbContext.CategoriaProdutos.Update(CategoriaProduto);
-      _dbContext.SaveChanges();
+      await _dbContext.SaveChangesAsync();
     }
   }
 }
