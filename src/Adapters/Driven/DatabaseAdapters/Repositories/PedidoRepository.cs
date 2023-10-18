@@ -25,7 +25,7 @@ namespace DatabaseAdapters.Repositories
       return await _dbContext.Pedidos.Where(p => p.Status == status).ToListAsync();
     }
 
-    public async Task<IEnumerable<Pedido>> GetByCliente(Guid clienteId)
+    public async Task<IEnumerable<Pedido?>> GetByCliente(Guid clienteId)
     {
       return await _dbContext.Pedidos.Where(p => p.ClienteId == clienteId).ToListAsync();
     }

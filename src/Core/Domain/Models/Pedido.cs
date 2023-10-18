@@ -13,7 +13,7 @@
         public Pagamento GerarPagamento(MetodoPagamento metodoPagamento)
         {
             ValorTotal = Produtos.Sum(p => p.Preco);
-            Status = Status.EmProgresso;
+            Status = Status.Recebido;
 
             Pagamento = new Pagamento
             {
