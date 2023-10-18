@@ -43,7 +43,17 @@ public class PedidoUseCase : IPedidoUseCase
 
     public async Task<IEnumerable<Pedido?>> TodosPedidos()
     {
-        var result = await _pedidoRepository.GetAll();
-        return result;
+        _logger.LogInformation("Buscando todos os pedidos");
+
+        try
+        {
+            var pedidos = await _pedidoRepository.GetAll();
+            return pedidos.Any() ? pedidos : throw new NotFoundException("Pedidos não encontrados");
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Erro ao buscar todos os pedidos.");
+            throw;
+        }
     }
 }
