@@ -1,5 +1,6 @@
 using Domain;
 using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
 
 namespace Application.UseCases
 {
@@ -16,17 +17,25 @@ namespace Application.UseCases
 
     public async Task CriarCategoriaAsync(CategoriaProduto categoria)
     {
-      try
-      {
-        if (CategoriaProdutoValidador.IsValid(categoria))
-        {
-          await _categoriaRepository.Add(categoria);
-        }
-      }
-      catch (Exception ex)
-      {
-        throw;
-      }
+      _logger.LogInformation("Criando categoria de produto");
+
+            try
+            {
+                if (CategoriaProdutoValidador.IsValid(categoria))
+                {
+                    await _categoriaRepository.Add(categoria);
+                }
+                else
+                {
+                    _logger.LogError("Categoria de produto inválida");
+                    throw new ArgumentException("Categoria de produto inválida");
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erro ao criar categoria de produto");
+                throw;
+            }
     }
 
     public async Task<IEnumerable<CategoriaProduto>> TodasCategorias()
