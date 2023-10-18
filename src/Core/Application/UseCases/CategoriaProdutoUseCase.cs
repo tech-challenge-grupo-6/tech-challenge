@@ -4,20 +4,20 @@ using System.Threading.Tasks;
 
 namespace Application.UseCases
 {
-    public class CategoriaProdutoUseCase : ICategoriaProdutoUseCase
+  public class CategoriaProdutoUseCase : ICategoriaProdutoUseCase
+  {
+    private readonly ICategoriaProdutoRepository _categoriaRepository;
+    private readonly ILogger<CategoriaProduto> _logger;
+
+    public CategoriaProdutoUseCase(ICategoriaProdutoRepository categoriaRepository, ILogger<CategoriaProduto> logger)
     {
-        private readonly ICategoriaProdutoRepository _categoriaRepository;
-        private readonly ILogger<CategoriaProdutoUseCase> _logger;
+      _categoriaRepository = categoriaRepository;
+      _logger = logger;
+    }
 
-        public CategoriaProdutoUseCase(ICategoriaProdutoRepository categoriaRepository, ILogger<CategoriaProdutoUseCase> logger)
-        {
-            _categoriaRepository = categoriaRepository;
-            _logger = logger;
-        }
-
-        public async Task CriarCategoriaAsync(CategoriaProduto categoria)
-        {
-            _logger.LogInformation("Criando categoria de produto");
+    public async Task CriarCategoriaAsync(CategoriaProduto categoria)
+    {
+      _logger.LogInformation("Criando categoria de produto");
 
             try
             {
@@ -36,6 +36,21 @@ namespace Application.UseCases
                 _logger.LogError(ex, "Erro ao criar categoria de produto");
                 throw;
             }
-        }
     }
+
+    public async Task<IEnumerable<CategoriaProduto>> TodasCategorias()
+    {
+      _logger.LogInformation("Buscando categorias de produto");
+      try
+      {
+        var result = await _categoriaRepository.GetAll() ?? throw new NotFoundException("Categorias não encontradas");
+        return result;
+      }
+      catch (Exception ex)
+      {
+        _logger.LogError(ex, "Erro ao buscar categorias de produto");
+        throw;
+      }
+    }
+  }
 }

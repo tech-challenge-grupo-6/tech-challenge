@@ -11,9 +11,12 @@ public class PedidoController : ControllerBase
 {
 
     private readonly IPedidoUseCase _pedidoUseCase;
-    
-    public PedidoController(IPedidoUseCase pedidoUseCase){
+    private readonly ILogger<PedidoController> _logger;
+
+    public PedidoController(IPedidoUseCase pedidoUseCase, ILogger<PedidoController> logger)
+    {
         _pedidoUseCase = pedidoUseCase;
+        _logger = logger;
     }
 
     [HttpGet]
@@ -22,7 +25,21 @@ public class PedidoController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Get()
     {
-        return Ok(await _pedidoUseCase.TodosPedidos());
+        _logger.LogInformation("Listando todos os pedidos");
+        try
+        {
+            var pedidos = await _pedidoUseCase.TodosPedidos();
+            return Ok(pedidos);
+        }
+        catch (NotFoundException e)
+        {
+            return NotFound(e.Message);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Erro ao listar os pedidos");
+            return StatusCode(StatusCodes.Status500InternalServerError, "Erro interno");
+        }
     }
 
     [HttpGet("{id}")]
@@ -58,5 +75,80 @@ public class PedidoController : ControllerBase
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     public void Delete(int id)
     {
+    }
+
+    [HttpPatch("{id}/status/emprogresso")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> PutEmProgresso(Guid id)
+    {
+        try
+        {
+            _logger.LogInformation("Mudando status do pedido {pedido} para 'Em Pregresso'", id);
+            await _pedidoUseCase.AlterarStatusPedido(id, Status.EmProgresso);
+            return NoContent();
+        }
+        catch (Exception ex) when (ex.GetType() == typeof(BusinessException) || ex.GetType() == typeof(NotFoundException))
+        {
+            _logger.LogError(ex, "Erro ao mudar status do pedido {pedido} para 'Em Pregresso'", id);
+            return BadRequest(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Erro ao mudar status do pedido {pedido} para 'Em Pregresso'", id);
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        }
+    }
+
+    [HttpPatch("{id}/status/pronto")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> PutPronto(Guid id)
+    {
+        try
+        {
+            _logger.LogInformation("Mudando status do pedido {pedido} para 'Pronto'", id);
+            await _pedidoUseCase.AlterarStatusPedido(id, Status.Pronto);
+            return NoContent();
+        }
+        catch (Exception ex) when (ex.GetType() == typeof(BusinessException) || ex.GetType() == typeof(NotFoundException))
+        {
+            _logger.LogError(ex, "Erro ao mudar status do pedido {pedido} para 'Em Pregresso'", id);
+            return BadRequest(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Erro ao mudar status do pedido {pedido} para 'Pronto'", id);
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        }
+    }
+
+    [HttpPatch("{id}/status/finalizado")]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    public async Task<IActionResult> PutFinalizado(Guid id)
+    {
+        try
+        {
+            _logger.LogInformation("Mudando status do pedido {pedido} para 'Finalizado'", id);
+            await _pedidoUseCase.AlterarStatusPedido(id, Status.Finalizado);
+            return NoContent();
+        }
+        catch (Exception ex) when (ex.GetType() == typeof(BusinessException) || ex.GetType() == typeof(NotFoundException))
+        {
+            _logger.LogError(ex, "Erro ao mudar status do pedido {pedido} para 'Em Pregresso'", id);
+            return BadRequest(ex.Message);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Erro ao mudar status do pedido {pedido} para 'Finalizado'", id);
+            return StatusCode(StatusCodes.Status500InternalServerError);
+        }
     }
 }

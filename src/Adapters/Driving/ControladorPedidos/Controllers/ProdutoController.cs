@@ -64,8 +64,25 @@ public class ProdutoController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public void Post([FromBody] string value)
+    public async Task<ActionResult> Post([FromBody] CriarEditarProdutoDto produtoDto)
     {
+        _logger.LogInformation("Produto produto: {ProdutoDto}", produtoDto);
+        try
+        {
+            var produto = (Produto)produtoDto;
+            await _produtoUseCase.CriarProduto(produto);
+            return CreatedAtAction(nameof(Post), new { id = produto.Id }, null);
+        }
+        catch (ArgumentException ex)
+        {
+            _logger.LogError(ex, "Erro ao criar produto: {ProdutoDto}", produtoDto);
+            return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Erro ao criar produto: {ClienteDto}", produtoDto);
+            return StatusCode(StatusCodes.Status500InternalServerError, "Erro interno");
+        }
     }
 
     [HttpPut("{id}")]
@@ -73,15 +90,45 @@ public class ProdutoController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public void Put(int id, [FromBody] string value)
+    public async Task<ActionResult> Put(Guid id, [FromBody] CriarEditarProdutoDto produtoDto)
     {
+        _logger.LogInformation("Produto editado: {id}", id);
+        try
+        {
+            await _produtoUseCase.EditarProduto(id, (Produto)produtoDto);
+            return StatusCode(StatusCodes.Status204NoContent, "Editado com sucesso!");
+        }
+        catch (NotFoundException e)
+        {
+            return NotFound(e.Message);
+        }
+        catch (ArgumentException ex)
+        {
+            _logger.LogError(ex, "Erro ao editar produto: {id}", id);
+            return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
+        }
     }
 
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public void Delete(int id)
+    public async Task<IActionResult> Delete(Guid id)
     {
+        _logger.LogInformation("Produto removido: {id}", id);
+        try
+        {
+            await _produtoUseCase.RemoverProduto(id);
+            return StatusCode(StatusCodes.Status204NoContent, "Removido com sucesso!");
+        }
+        catch (NotFoundException e)
+        {
+            return NotFound(e.Message);
+        }
+        catch (ArgumentException ex)
+        {
+            _logger.LogError(ex, "Erro ao remover produto: {id}", id);
+            return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
+        }
     }
 }

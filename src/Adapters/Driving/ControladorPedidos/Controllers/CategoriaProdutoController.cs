@@ -8,10 +8,12 @@ namespace ControladorPedidos.Controllers
     [Route("[controller]")]
     public class CategoriaProdutoController : ControllerBase
     {
+        private readonly ILogger<CategoriaProdutoController> _logger;
         private readonly ICategoriaProdutoUseCase _categoriaUseCase;
 
-        public CategoriaProdutoController(ICategoriaProdutoUseCase categoriaUseCase)
+        public CategoriaProdutoController(ILogger<CategoriaProdutoController> logger, ICategoriaProdutoUseCase categoriaUseCase = null)
         {
+            _logger = logger;
             _categoriaUseCase = categoriaUseCase;
         }
 
@@ -19,9 +21,24 @@ namespace ControladorPedidos.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public IEnumerable<string> Get()
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        public async Task<IActionResult> Get()
         {
-            return new string[] { "value1", "value2" };
+            _logger.LogInformation("Listando categorias de produto");
+            try
+            {
+                var categorias = await _categoriaUseCase.TodasCategorias();
+                return Ok(categorias);
+            }
+            catch (NotFoundException e)
+            {
+                return NotFound(e.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Listando categorias de produto");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Erro interno");
+            }
         }
 
         [HttpGet("{id}")]
@@ -56,12 +73,6 @@ namespace ControladorPedidos.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Erro interno");
             }
         }
-
-        private Task NewMethod(CategoriaProduto categoria)
-        {
-            return _categoriaUseCase.CriarCategoriaAsync(categoria);
-        }
-
 
         [HttpPut("{id}")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
