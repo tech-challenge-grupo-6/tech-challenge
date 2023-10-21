@@ -8,7 +8,9 @@
 
 Repositório: https://github.com/RenanSX/tech-challenge
 
-Event Storm: [Link para Figma](https://www.figma.com/file/269hzIucolU1KCX7Ra60O8/Event-storming-Tech-Challenge?type=whiteboard&node-id=103-111) 
+Event Storm: [Link para Figma](https://www.figma.com/file/269hzIucolU1KCX7Ra60O8/Event-storming-Tech-Challenge?type=whiteboard&node-id=103-111)
+
+Diagramas Linguagem Ubíqua: [Link para diagramas](https://github.com/RenanSX/tech-challenge/tree/main/documentation/linguagem-ubiuqua)
 
 Swagger (localhost): [Link para Swagger](http://localhost:5003/swagger/index.html)
 > Para acessar o Swagger, é necessário rodar o projeto e acessar o link acima.
