@@ -1,0 +1,394 @@
+{
+	"info": {
+		"_postman_id": "e69bf1d3-93f0-41c8-a755-849ddcfcdac2",
+		"name": "Tech Challenge",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30666249"
+	},
+	"item": [
+		{
+			"name": "CategoriaProduto",
+			"item": [
+				{
+					"name": "Listar",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5003/CategoriaProduto",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5003",
+							"path": [
+								"CategoriaProduto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Criar",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nome\": \"Teste\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5003/CategoriaProduto",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5003",
+							"path": [
+								"CategoriaProduto"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Cliente",
+			"item": [
+				{
+					"name": "Buscar por CPF",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5003/Cliente/35042084061",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5003",
+							"path": [
+								"Cliente",
+								"35042084061"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Criar",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nome\": \"Teste\",\n  \"cpf\": \"96828696840\",\n  \"email\": \"ko50f@fjsku.com\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5003/Cliente",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5003",
+							"path": [
+								"Cliente"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Produto",
+			"item": [
+				{
+					"name": "Listar por Categoria",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5003/Produto/3635150d-02f2-4311-b97a-0b9f29593db8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5003",
+							"path": [
+								"Produto",
+								"3635150d-02f2-4311-b97a-0b9f29593db8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Criar",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nome\": \"Teste\",\n  \"categoriaId\": \"3635150d-02f2-4311-b97a-0b9f29593db8\",\n  \"preco\": 10.0,\n  \"descricao\": \"Produto teste\",\n  \"imagem\": \"VGVzdGUgaW1hZ2Vt\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5003/Produto",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5003",
+							"path": [
+								"Produto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Alterar",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nome\": \"Teste 2\",\n  \"categoriaId\": \"3635150d-02f2-4311-b97a-0b9f29593db8\",\n  \"preco\": 20.0,\n  \"descricao\": \"Teste 2\",\n  \"imagem\": \"VGVzdGUgaW1hZ2Vt\"\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5003/Produto/b2c0c627-4410-4a53-ac2f-08dbd2655cd8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5003",
+							"path": [
+								"Produto",
+								"b2c0c627-4410-4a53-ac2f-08dbd2655cd8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Deletar",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5003/Produto/b2c0c627-4410-4a53-ac2f-08dbd2655cd8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5003",
+							"path": [
+								"Produto",
+								"b2c0c627-4410-4a53-ac2f-08dbd2655cd8"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pedido",
+			"item": [
+				{
+					"name": "Listar",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5003/Pedido",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5003",
+							"path": [
+								"Pedido"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Por em progresso",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5003/Pedido/228e61bc-9f42-4a4f-95f5-521068e0c682/status/emprogresso",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5003",
+							"path": [
+								"Pedido",
+								"228e61bc-9f42-4a4f-95f5-521068e0c682",
+								"status",
+								"emprogresso"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Mudar para pronto",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5003/Pedido/228e61bc-9f42-4a4f-95f5-521068e0c682/status/pronto",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5003",
+							"path": [
+								"Pedido",
+								"228e61bc-9f42-4a4f-95f5-521068e0c682",
+								"status",
+								"pronto"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Finalizar",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5003/Pedido/228e61bc-9f42-4a4f-95f5-521068e0c682/status/finalizado",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5003",
+							"path": [
+								"Pedido",
+								"228e61bc-9f42-4a4f-95f5-521068e0c682",
+								"status",
+								"finalizado"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Pagamento",
+			"item": [
+				{
+					"name": "Pagar Pedido",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:5003/Pagamento/pagar/228e61bc-9f42-4a4f-95f5-521068e0c682",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5003",
+							"path": [
+								"Pagamento",
+								"pagar",
+								"228e61bc-9f42-4a4f-95f5-521068e0c682"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
