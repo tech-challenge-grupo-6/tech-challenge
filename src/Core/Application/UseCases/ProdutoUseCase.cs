@@ -83,7 +83,7 @@ public class ProdutoUseCase : IProdutoUseCase
     }
     catch (Exception ex)
     {
-      _logger.LogInformation(ex, "Erro ao criar produto");
+      _logger.LogError(ex, "Erro ao criar produto");
       throw;
     }
   }
