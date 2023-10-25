@@ -17,6 +17,14 @@ Swagger (localhost): [Link para Swagger](http://localhost:5003/swagger/index.htm
 
 Postman Collections: [Link para Postman Collections](https://github.com/RenanSX/tech-challenge/tree/main/documentation/postman)
 
+## Como executar localmente
+
+- Acesse a pasta raiz do projeto onde se encontram os arquivos `docker-compose.yml`
+- Execute o comando `docker-compose build`
+- Execute o comando `docker-compose up`
+
+> ATENÇÃO: Caso a aplicação `controladorpedidos` inicie sua execução antes do banco de dados `mysql` estar totalmente disponível, a aplicação irá falhar. Neste caso, basta parar os containers e executar o comando `docker-compose up` novamente.
+
 ## Fluxo de Eventos
 
 ### Contexto: Identificação do Cliente
