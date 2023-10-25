@@ -2,15 +2,14 @@
 
 namespace ControladorPedidos;
 
-public record ProdutoIds(Guid Id, double Preco);
-public record CriarPedidoDto(Guid ClienteId, Guid PagamentoId, double ValorTotal, List<ProdutoIds> Produtos)
+public record CriarPedidoDto(Guid ClienteId, List<Guid> ProdutosIds)
 {
-
     public static explicit operator Pedido(CriarPedidoDto dto) => new()
     {
         ClienteId = dto.ClienteId,
-        PagamentoId = dto.PagamentoId,
-        ValorTotal = dto.ValorTotal,
-        Produtos = dto.Produtos.Select(p => new Produto { Id = p.Id, Preco = p.Preco }).ToList(),
+        Produtos = dto.ProdutosIds.Select(p => new Produto 
+        { 
+            Id = p
+        }).ToList(),
     };
 }

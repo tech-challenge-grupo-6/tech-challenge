@@ -8,15 +8,13 @@ public class PedidoUseCase : IPedidoUseCase
     private readonly IPedidoRepository _pedidoRepository;
     private readonly ILogger<PedidoUseCase> _logger;
     private readonly IProdutoRepository _produtoRepository;
-    private readonly IClienteRepository _clienteRepository;
 
     public PedidoUseCase(IPedidoRepository pedidoRepository, ILogger<PedidoUseCase> logger, 
-    IProdutoRepository produtoRepository, IClienteRepository clienteRepository)
+    IProdutoRepository produtoRepository)
     {
         _pedidoRepository = pedidoRepository;
         _logger = logger;
         _produtoRepository = produtoRepository;
-        _clienteRepository = clienteRepository;
     }
 
     public async Task AlterarStatusPedido(Guid id, Status novoStatus)
@@ -66,18 +64,22 @@ public class PedidoUseCase : IPedidoUseCase
     {
         _logger.LogInformation("Criando pedido");
 
+        var produtoIds = pedido.Produtos.Select(p => p.Id);
+        
+        pedido.Produtos = new List<Produto>();
         var valorTotal = 0.0;
-        foreach (var p in pedido.Produtos)
+        
+        foreach (var p in produtoIds)
         {
-            var produto = await _produtoRepository.GetById(p.Id) ?? throw new NotFoundException("Produto não encontrado");
+            var produto = await _produtoRepository.GetById(p) ?? throw new NotFoundException("Produto não encontrado");
             valorTotal += produto.Preco;
+            pedido.Produtos.Add(produto);
         }
 
         pedido.ValorTotal = valorTotal;
-        pedido.Produtos = null;
         try
         {
-            await _pedidoRepository.Add(pedido);    
+            if (PedidoValidador.IsValid(pedido)) await _pedidoRepository.Add(pedido);    
         }
         catch (Exception ex)
         {
