@@ -56,8 +56,27 @@ public class PedidoController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public void Post([FromBody] string value)
+    public async Task<ActionResult> Post([FromBody] CriarPedidoDto pedidoDto)
     {
+        _logger.LogInformation("Pedido pedido: {PedidoDto}", pedidoDto);
+        try
+        {
+            var pedido = (Pedido)pedidoDto;
+
+            await _pedidoUseCase.MontarPedido(pedido);
+            return CreatedAtAction(nameof(Post), new { id = pedido.Id }, null);
+        }
+        catch (ArgumentException ex)
+        {
+            _logger.LogError(ex, "Erro ao criar pedido: {PedidoDto}", pedidoDto);
+            return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Erro ao criar pedido: {PedidoDto}", pedidoDto);
+            return StatusCode(StatusCodes.Status500InternalServerError, "Erro interno");
+        }
+
     }
 
     [HttpPut("{id}")]
