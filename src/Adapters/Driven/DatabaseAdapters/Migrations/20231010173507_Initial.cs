@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Org.BouncyCastle.Crypto.Engines;
 
 #nullable disable
 
@@ -179,6 +180,96 @@ namespace DatabaseAdapters.Migrations
                 name: "IX_Produto_CategoriaId",
                 table: "Produto",
                 column: "CategoriaId");
+
+            Seed(migrationBuilder);
+        }
+
+        private void Seed(MigrationBuilder migrationBuilder)
+        {
+            // Cliente
+            migrationBuilder.InsertData(
+                table: "Cliente",
+                columns: new[] { "Id", "Nome", "Email", "Cpf", "CriadoEm", "AtualizadoEm" },
+                values: new object[,]
+                {
+                    {Guid.NewGuid(), "John Doe", "johndoe@email.com", "35042084061", DateTime.Now, DateTime.Now}
+                });
+            // Usuario
+            migrationBuilder.InsertData(
+                table: "Usuario",
+                columns: new[] { "Id", "Nome", "Email", "Login", "Senha", "CriadoEm", "AtualizadoEm" },
+                values: new object[,]
+                {
+                    {Guid.NewGuid(), "John Doe Admin", "johndoe-admin@email.com", "john_admin", "1234", DateTime.Now, DateTime.Now}
+                });
+            // Categoria Produto
+            var LancheId = Guid.NewGuid();
+            var BebidaId = Guid.NewGuid();
+            var ComplementoId = Guid.NewGuid();
+            migrationBuilder.InsertData(
+                table: "CategoriaProduto",
+                columns: new[] { "Id", "Nome", "CriadoEm", "AtualizadoEm" },
+                values: new object[,]
+                {
+                    {LancheId, "Lanche", DateTime.Now, DateTime.Now}
+                });
+            migrationBuilder.InsertData(
+                table: "CategoriaProduto",
+                columns: new[] { "Id", "Nome", "CriadoEm", "AtualizadoEm" },
+                values: new object[,]
+                {
+                    {BebidaId, "Bebida", DateTime.Now, DateTime.Now}
+                });
+            migrationBuilder.InsertData(
+                table: "CategoriaProduto",
+                columns: new[] { "Id", "Nome", "CriadoEm", "AtualizadoEm" },
+                values: new object[,]
+                {
+                    {ComplementoId, "Complemento", DateTime.Now, DateTime.Now}
+                });
+            // Produtos
+            migrationBuilder.InsertData(
+                table: "Produto",
+                columns: new[] { "Id", "Nome", "CategoriaId", "Preco", "Descricao", "Imagem", "CriadoEm", "AtualizadoEm" },
+                values: new object[,]
+                {
+                    {Guid.NewGuid(), "Coca-cola", BebidaId, 10, "Coca-cola", "coca-cola.png", DateTime.Now, DateTime.Now}
+                });
+            migrationBuilder.InsertData(
+                table: "Produto",
+                columns: new[] { "Id", "Nome", "CategoriaId", "Preco", "Descricao", "Imagem", "CriadoEm", "AtualizadoEm" },
+                values: new object[,]
+                {
+                    {Guid.NewGuid(), "Pepsi", BebidaId, 10, "Pepsi", "pepsi.png", DateTime.Now, DateTime.Now}
+                });
+            migrationBuilder.InsertData(
+                table: "Produto",
+                columns: new[] { "Id", "Nome", "CategoriaId", "Preco", "Descricao", "Imagem", "CriadoEm", "AtualizadoEm" },
+                values: new object[,]
+                {
+                    {Guid.NewGuid(), "Hámburguer", LancheId, 35, "Hámburguer", "hamburguer.png", DateTime.Now, DateTime.Now}
+                });
+            migrationBuilder.InsertData(
+                table: "Produto",
+                columns: new[] { "Id", "Nome", "CategoriaId", "Preco", "Descricao", "Imagem", "CriadoEm", "AtualizadoEm" },
+                values: new object[,]
+                {
+                    {Guid.NewGuid(), "Pizza", LancheId, 50, "Pizza", "pizza.png", DateTime.Now, DateTime.Now}
+                });
+            migrationBuilder.InsertData(
+                table: "Produto",
+                columns: new[] { "Id", "Nome", "CategoriaId", "Preco", "Descricao", "Imagem", "CriadoEm", "AtualizadoEm" },
+                values: new object[,]
+                {
+                    {Guid.NewGuid(), "Bacon", ComplementoId, 1, "Bacon", "bacon.png", DateTime.Now, DateTime.Now}
+                });
+            migrationBuilder.InsertData(
+                table: "Produto",
+                columns: new[] { "Id", "Nome", "CategoriaId", "Preco", "Descricao", "Imagem", "CriadoEm", "AtualizadoEm" },
+                values: new object[,]
+                {
+                    {Guid.NewGuid(), "Ketchup", ComplementoId, 1, "Ketchup", "ketchup.png", DateTime.Now, DateTime.Now}
+                });
         }
 
         /// <inheritdoc />
