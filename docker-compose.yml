@@ -3,20 +3,6 @@
 version: "3.4"
 
 services:
-  controladorpedidos:
-    image: controladorpedidos
-    build:
-      context: .
-      dockerfile: src/Adapters/Driving/ControladorPedidos/Dockerfile
-    ports:
-      - 5003:5003
-    environment:
-      - ConnectionStrings__DefaultConnection=server=database_mysql;database=controlador_pedidos;user=root;password=P@ssWord
-    depends_on:
-      - database_mysql
-    networks:
-      - controladorpedidos-network
-
   database_mysql:
     image: mysql
     environment:
@@ -30,6 +16,22 @@ services:
       - mysql_data:/var/lib/mysql
     networks:
       - controladorpedidos-network
+    restart: always
+
+  controladorpedidos:
+    image: controladorpedidos
+    build:
+      context: .
+      dockerfile: src/Adapters/Driving/ControladorPedidos/Dockerfile
+    ports:
+      - 5003:5003
+    environment:
+      - ConnectionStrings__DefaultConnection=server=database_mysql;database=controlador_pedidos;user=root;password=P@ssWord
+    networks:
+      - controladorpedidos-network
+    restart: on-failure
+    depends_on:
+      - database_mysql
 
 networks:
   controladorpedidos-network:
