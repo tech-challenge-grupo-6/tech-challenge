@@ -5,13 +5,18 @@ namespace Application.UseCases;
 
 public class PedidoUseCase : IPedidoUseCase
 {
-
     private readonly IPedidoRepository _pedidoRepository;
     private readonly ILogger<PedidoUseCase> _logger;
-    public PedidoUseCase(IPedidoRepository pedidoRepository, ILogger<PedidoUseCase> logger)
+    private readonly IProdutoRepository _produtoRepository;
+    private readonly IClienteRepository _clienteRepository;
+
+    public PedidoUseCase(IPedidoRepository pedidoRepository, ILogger<PedidoUseCase> logger, 
+    IProdutoRepository produtoRepository, IClienteRepository clienteRepository)
     {
         _pedidoRepository = pedidoRepository;
         _logger = logger;
+        _produtoRepository = produtoRepository;
+        _clienteRepository = clienteRepository;
     }
 
     public async Task AlterarStatusPedido(Guid id, Status novoStatus)
@@ -55,5 +60,32 @@ public class PedidoUseCase : IPedidoUseCase
             _logger.LogError(ex, "Erro ao buscar todos os pedidos.");
             throw;
         }
+    }
+
+    public async Task MontarPedido(Pedido pedido)
+    {
+        _logger.LogInformation("Criando pedido");
+
+        _ = await _clienteRepository.GetById((Guid)pedido.ClienteId) ?? throw new NotFoundException("Cliente não encontrado");
+
+        var produtoIds = pedido.Produtos.Select(p => p.Id);
+        
+        pedido.Produtos = new List<Produto>();
+
+        foreach (var p in produtoIds)
+        {
+            var produto = await _produtoRepository.GetById(p) ?? throw new NotFoundException("Produto não encontrado");
+            pedido.Produtos.Add(produto);
+        }
+
+        try
+        {
+            if (PedidoValidador.IsValid(pedido)) await _pedidoRepository.Add(pedido);    
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Erro ao criar pedido");
+            throw;
+        }    
     }
 }

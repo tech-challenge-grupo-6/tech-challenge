@@ -7,4 +7,5 @@ public interface IPedidoUseCase
 {
     Task<IEnumerable<Pedido?>> TodosPedidos();
     Task AlterarStatusPedido(Guid id, Status novoStatus);
+    Task MontarPedido(Pedido pedido);
 }
