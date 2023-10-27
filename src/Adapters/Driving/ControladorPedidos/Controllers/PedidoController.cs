@@ -64,7 +64,7 @@ public class PedidoController : ControllerBase
             var pedido = (Pedido)pedidoDto;
 
             await _pedidoUseCase.MontarPedido(pedido);
-            return CreatedAtAction(nameof(Post), new { id = pedido.Id }, null);
+            return CreatedAtAction(nameof(Post), new { id = pedido.Id });
         }
         catch (ArgumentException ex)
         {
