@@ -356,6 +356,38 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Montar pedido",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"clienteId\": \"5f57b7cf-9d55-49e0-a2b2-71bd7aa1a974\",\n  \"produtosIds\": [\n    \"6ab0e5e5-5c50-4040-a7b7-dbf5d67e7af0\"\n  ]\n}"
+						},
+						"url": {
+							"raw": "http://localhost:5003/Pedido",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5003",
+							"path": [
+								"Pedido"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},

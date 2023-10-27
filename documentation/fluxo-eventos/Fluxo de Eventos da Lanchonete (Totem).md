@@ -75,11 +75,19 @@ Postman Collections: [Link para Postman Collections](https://github.com/RenanSX/
         ```
 
 3. O cliente seleciona os produtos desejados e o sistema relaciona os ids para criar o pedido
-    - Postman endpoint: Tech Challenge -> Pedido -> Criar POST
+    - Postman endpoint: Tech Challenge -> Pedido -> Montar pedido POST
     - Swagger endpoint: Pedido -> POST
     - Ex:
         ```bash
-        # precisamos adicionar um exemplo aqui
+        curl --location 'http://localhost:5003/Pedido' \
+        --header 'accept: */*' \
+        --header 'Content-Type: application/json' \
+        --data '{
+            "clienteId": "5f57b7cf-9d55-49e0-a2b2-71bd7aa1a974",
+            "produtosIds": [
+                "6ab0e5e5-5c50-4040-a7b7-dbf5d67e7af0"
+            ]
+        }'
         ```
 
 4. O sistema busca as informações do pedido para visualização
