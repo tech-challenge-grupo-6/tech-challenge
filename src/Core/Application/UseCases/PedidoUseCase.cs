@@ -10,7 +10,7 @@ public class PedidoUseCase : IPedidoUseCase
     private readonly IProdutoRepository _produtoRepository;
     private readonly IClienteRepository _clienteRepository;
 
-    public PedidoUseCase(IPedidoRepository pedidoRepository, ILogger<PedidoUseCase> logger, 
+    public PedidoUseCase(IPedidoRepository pedidoRepository, ILogger<PedidoUseCase> logger,
     IProdutoRepository produtoRepository, IClienteRepository clienteRepository)
     {
         _pedidoRepository = pedidoRepository;
@@ -66,10 +66,10 @@ public class PedidoUseCase : IPedidoUseCase
     {
         _logger.LogInformation("Criando pedido");
 
-        _ = await _clienteRepository.GetById((Guid)pedido.ClienteId) ?? throw new NotFoundException("Cliente não encontrado");
+        _ = await _clienteRepository.GetById((Guid)pedido.ClienteId!) ?? throw new NotFoundException("Cliente não encontrado");
 
         var produtoIds = pedido.Produtos.Select(p => p.Id);
-        
+
         pedido.Produtos = new List<Produto>();
 
         foreach (var p in produtoIds)
@@ -80,12 +80,12 @@ public class PedidoUseCase : IPedidoUseCase
 
         try
         {
-            if (PedidoValidador.IsValid(pedido)) await _pedidoRepository.Add(pedido);    
+            if (PedidoValidador.IsValid(pedido)) await _pedidoRepository.Add(pedido);
         }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Erro ao criar pedido");
             throw;
-        }    
+        }
     }
 }

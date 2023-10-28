@@ -1,11 +1,10 @@
-﻿namespace Domain
+﻿namespace Domain;
+
+public enum Status
 {
-    public enum Status
-    {
-        Criado,
-        Recebido,
-        EmProgresso,
-        Pronto,
-        Finalizado
-    }
+    Criado,
+    Recebido,
+    EmProgresso,
+    Pronto,
+    Finalizado
 }

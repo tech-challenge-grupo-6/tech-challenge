@@ -1,6 +1,5 @@
 using Application.UseCases;
 using Domain;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ControladorPedidos.Controllers;
@@ -9,7 +8,6 @@ namespace ControladorPedidos.Controllers;
 [Route("[controller]")]
 public class PedidoController : ControllerBase
 {
-
     private readonly IPedidoUseCase _pedidoUseCase;
     private readonly ILogger<PedidoController> _logger;
 
@@ -19,6 +17,13 @@ public class PedidoController : ControllerBase
         _logger = logger;
     }
 
+    /// <summary>
+    /// Consulta todos os pedidos
+    /// </summary>
+    /// <returns>Retorna todos os pedidos.</returns>
+    /// <response code="200">Retorno todos os pedidos.</response>
+    /// <response code="404">Não encontrado.</response>
+    /// <response code="500">Erro interno.</response>
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -42,19 +47,17 @@ public class PedidoController : ControllerBase
         }
     }
 
-    [HttpGet("{id}")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public string Get(int id)
-    {
-        return "value";
-    }
-
+    /// <summary>
+    /// Cria um novo pedido
+    /// </summary>
+    /// <param name="pedidoDto">Dados do novo pedido.</param>
+    /// <returns>Retorna o ID do novo pedido.</returns>
+    /// <response code="201">Pedido criado com sucesso.</response>
+    /// <response code="400">Erro ao fazer a Request.</response>
+    /// <response code="500">Erro interno.</response>
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult> Post([FromBody] CriarPedidoDto pedidoDto)
     {
@@ -79,23 +82,13 @@ public class PedidoController : ControllerBase
 
     }
 
-    [HttpPut("{id}")]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public void Put(int id, [FromBody] string value)
-    {
-    }
-
-    [HttpDelete("{id}")]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
-    public void Delete(int id)
-    {
-    }
-
+    /// <summary>
+    /// Atualiza o status do pedido para "Em progresso".
+    /// </summary>
+    /// <param name="id">Recebe o Id para atualizar o pedido.</param>
+    /// <response code="204">Sem nenhum retorno.</response>
+    /// <response code="400">Erro ao fazer a Request.</response>
+    /// <response code="500">Erro interno.</response>
     [HttpPatch("{id}/status/emprogresso")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -121,6 +114,13 @@ public class PedidoController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Atualiza o status do pedido para "Pronto"
+    /// </summary>
+    /// <param name="id">Recebe o Id para atualizar o pedido.</param>
+    /// <response code="204">Sem nenhum retorno.</response>
+    /// <response code="400">Erro ao fazer a Request.</response>
+    /// <response code="500">Erro interno.</response>
     [HttpPatch("{id}/status/pronto")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -146,6 +146,13 @@ public class PedidoController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Atualiza o status do pedido para "Finalizado"
+    /// </summary>
+    /// <param name="id">Recebe o Id para atualizar o pedido.</param>
+    /// <response code="204">Sem nenhum retorno.</response>
+    /// <response code="400">Erro ao fazer a Request.</response>
+    /// <response code="500">Erro interno.</response>
     [HttpPatch("{id}/status/finalizado")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]

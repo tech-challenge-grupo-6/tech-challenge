@@ -1,14 +1,9 @@
-using System;
-using System.Threading.Tasks;
-using Domain;
+namespace Domain;
 
-namespace Domain
+public interface IUsuarioRepository
 {
-  public interface IUsuarioRepository
-  {
-    Task<Usuario> GetByLoginAndPassword(string login, string password);
+  Task<Usuario?> GetByLoginAndPassword(string login, string password);
 
-    void Add(Usuario usuario);
-    void Update(Usuario usuario);
-  }
+  void Add(Usuario usuario);
+  void Update(Usuario usuario);
 }
