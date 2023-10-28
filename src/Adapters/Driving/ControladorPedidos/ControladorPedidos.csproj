@@ -14,6 +14,12 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\Core\Application\Application.csproj" />
     <ProjectReference Include="..\..\..\Core\Domain\Domain.csproj" />
+    <ProjectReference Include="..\..\Driven\DatabaseAdapters\DatabaseAdapters.csproj" />
   </ItemGroup>
+
+  <PropertyGroup>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+  </PropertyGroup>
 
 </Project>

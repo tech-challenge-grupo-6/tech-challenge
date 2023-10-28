@@ -1,4 +1,25 @@
-# Tech Challenge - Fase 01
+# Fluxo de Eventos da Lanchonetes (Totem)
+
+Tech Challenge
+
+## Grupo 6
+
+- RM350836 (3SOAT): Marcio Lages Silva - marciolages@msn.com
+- RM351061 (3SOAT): Renan Silva Xavier - renansx2013@hotmail.com
+- RM351631 (3SOAT): Victor Sadao Higa Nagahara - viih.higa@gmail.com
+- RM351041 (3SOAT): Vitor de Souza - vitordesolza@gmail.com
+
+Swagger (localhost): [Link para Swagger](http://localhost:5003/swagger/index.html)
+
+> Para acessar o Swagger, é necessário rodar o projeto e acessar o link acima.
+
+Postman Collections: [Link para Postman Collections](https://github.com/RenanSX/tech-challenge/tree/main/documentation/postman)
+
+## Como executar localmente
+
+- Faça a clone deste repositório
+- Acesse a pasta raiz do projeto onde se encontram os arquivos `docker-compose.yml`
+- Execute o comando `docker-compose up -d --build`
 
 ## Contexto do Negócio
 
@@ -115,13 +136,12 @@ Na solução proposta, podemos identificar os seguintes domínios:
 
 ### Realização do pedido e pagamento
 
-![realizacao-do-pedido-e-pagamento](https://raw.githubusercontent.com/RenanSX/tech-challenge/main/documentation/realizacao-pedido-pagamento.png)
+![realizacao-do-pedido-e-pagamento](./documentation/linguagem-ubiqua//Realização%20do%20pedido%20e%20Pagamento_2023-10-28.png)
 
 ### preparação e entrega do pedido
 
-![preparacao-e-entrega-do-pedido](https://raw.githubusercontent.com/RenanSX/tech-challenge/main/documentation/preparacao-entrega-pedido.png)
+![preparacao-e-entrega-do-pedido](./documentation/linguagem-ubiqua/Preparação%20e%20entrega%20do%20pedido_2023-10-28.png)
 
 ### Event Storming
 
-[Link Event Storming](https://www.figma.com/file/269hzIucolU1KCX7Ra60O8/Event-storming-Tech-Challenge?type=whiteboard&node-id=157-854&t=3aA0WQGTuEu5vvrv-4)
-![event-storming](https://raw.githubusercontent.com/RenanSX/tech-challenge/main/documentation/event-storming.png)
+![event-storming](./documentation/linguagem-ubiqua/event-storming.png)

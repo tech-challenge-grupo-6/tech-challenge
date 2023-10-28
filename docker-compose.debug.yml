@@ -1,6 +1,6 @@
 # Please refer https://aka.ms/HTTPSinContainer on how to setup an https developer certificate for your ASP.NET Core service.
 
-version: '3.4'
+version: "3.4"
 
 services:
   controladorpedidos:
@@ -14,5 +14,31 @@ services:
       - 5003:5003
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ConnectionStrings__DefaultConnection=server=database_mysql;database=controlador_pedidos;user=root;password=P@ssWord
     volumes:
       - ~/.vsdbg:/remote_debugger:rw
+    depends_on:
+      - database_mysql
+    networks:
+      - controladorpedidos-network
+
+  database_mysql:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: P@ssWord
+      MYSQL_DATABASE: controlador_pedidos
+    ports:
+      - 3307:3306
+    expose:
+      - 3307
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - controladorpedidos-network
+
+networks:
+  controladorpedidos-network:
+    driver: bridge
+volumes:
+  mysql_data:
+    driver: local
