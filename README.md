@@ -144,5 +144,4 @@ Na solução proposta, podemos identificar os seguintes domínios:
 
 ### Event Storming
 
-[Link Event Storming](https://www.figma.com/file/269hzIucolU1KCX7Ra60O8/Event-storming-Tech-Challenge?type=whiteboard&node-id=157-854&t=3aA0WQGTuEu5vvrv-4)
 ![event-storming](./documentation/linguagem-ubiqua/event-storming.png)
