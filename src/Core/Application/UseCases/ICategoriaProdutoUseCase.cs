@@ -1,10 +1,9 @@
 using Domain;
 
-namespace Application.UseCases
+namespace Application.UseCases;
+
+public interface ICategoriaProdutoUseCase
 {
-  public interface ICategoriaProdutoUseCase
-  {
-    Task CriarCategoriaAsync(CategoriaProduto categoria);
-    Task<IEnumerable<CategoriaProduto>> TodasCategorias();
-  }
+  Task CriarCategoriaAsync(CategoriaProduto categoria);
+  Task<IEnumerable<CategoriaProduto>> TodasCategorias();
 }

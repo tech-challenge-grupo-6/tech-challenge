@@ -11,33 +11,22 @@ public class ProdutoController : ControllerBase
     private readonly ILogger<ProdutoController> _logger;
     private readonly IProdutoUseCase _produtoUseCase;
 
-    public ProdutoController(ILogger<ProdutoController> logger, IProdutoUseCase produtoUseCase = null)
+    public ProdutoController(ILogger<ProdutoController> logger, IProdutoUseCase produtoUseCase)
     {
         _logger = logger;
         _produtoUseCase = produtoUseCase;
     }
 
-    /*[HttpGet]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public IEnumerable<string> Get()
-    {
-        return new string[] { "value1", "value2" };
-    }
-
-    [HttpGet("{id}")]
-    [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    public string Get(int id)
-    {
-        return "value";
-    }*/
-
+    /// <summary>
+    /// Consulta produtos por categoria
+    /// </summary>
+    /// <param name="categoriaId">Filtra produtos por categoria</param>
+    /// <returns>Retorna produtos por categoria.</returns>
+    /// <response code="200">Retorno dados do produto.</response>
+    /// <response code="404">Não encontrado.</response>
+    /// <response code="500">Erro interno.</response>
     [HttpGet("{categoriaId}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> ListarPorCategoria(Guid categoriaId)
@@ -59,10 +48,17 @@ public class ProdutoController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Criar um produto
+    /// </summary>
+    /// <param name="produtoDto">Dados do novo produto</param>
+    /// <returns>Retorna ID novo produto.</returns>
+    /// <response code="201">Produto criado com sucesso</response>
+    /// <response code="400">Bad request</response>
+    /// <response code="500">Erro Interno.</response>
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult> Post([FromBody] CriarEditarProdutoDto produtoDto)
     {
@@ -85,11 +81,19 @@ public class ProdutoController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Editar um produto
+    /// </summary>
+    /// <param name="id">Id do produto</param>
+    /// <param name="produtoDto">Dados do produto</param>
+    /// <returns>Retorna ID novo produto.</returns>
+    /// <response code="200">Produto editado com sucesso</response>
+    /// <response code="404">Produto não encontrado</response>
+    /// <response code="400">Bad request.</response>
     [HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<ActionResult> Put(Guid id, [FromBody] CriarEditarProdutoDto produtoDto)
     {
         _logger.LogInformation("Produto editado: {id}", id);
@@ -109,10 +113,18 @@ public class ProdutoController : ControllerBase
         }
     }
 
+    /// <summary>
+    /// Deletar um produto
+    /// </summary>
+    /// <param name="id">Id do produto</param>
+    /// <returns>Retorna ID novo produto.</returns>
+    /// <response code="200">Produto deletado com sucesso</response>
+    /// <response code="404">Produto não encontrado</response>
+    /// <response code="400">Bad request.</response>
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Delete(Guid id)
     {
         _logger.LogInformation("Produto removido: {id}", id);

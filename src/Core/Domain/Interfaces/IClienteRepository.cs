@@ -1,15 +1,10 @@
-using System;
-using System.Threading.Tasks;
-using Domain;
+namespace Domain;
 
-namespace Domain
+public interface IClienteRepository
 {
-  public interface IClienteRepository
-  {
-    Task<Cliente?> GetById(Guid id);
-    Task<Cliente?> GetByCpf(string cpf);
+  Task<Cliente?> GetById(Guid id);
+  Task<Cliente?> GetByCpf(string cpf);
 
-    Task Add(Cliente cliente);
-    Task Update(Cliente cliente);
-  }
+  Task Add(Cliente cliente);
+  Task Update(Cliente cliente);
 }

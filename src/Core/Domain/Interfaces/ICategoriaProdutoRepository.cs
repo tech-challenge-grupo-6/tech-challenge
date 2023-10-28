@@ -1,14 +1,10 @@
-using System;
-using System.Threading.Tasks;
+namespace Domain;
 
-namespace Domain
+public interface ICategoriaProdutoRepository
 {
-  public interface ICategoriaProdutoRepository
-  {
-    Task<IEnumerable<CategoriaProduto>> GetAll();
-    Task<CategoriaProduto> GetById(Guid id);
+  Task<IEnumerable<CategoriaProduto>> GetAll();
+  Task<CategoriaProduto?> GetById(Guid id);
 
-    Task Add(CategoriaProduto categoria);
-    Task Update(CategoriaProduto categoria);
-  }
+  Task Add(CategoriaProduto categoria);
+  Task Update(CategoriaProduto categoria);
 }
