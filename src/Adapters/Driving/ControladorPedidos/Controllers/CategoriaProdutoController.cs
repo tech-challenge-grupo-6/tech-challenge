@@ -6,17 +6,8 @@ namespace ControladorPedidos.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class CategoriaProdutoController : ControllerBase
+public class CategoriaProdutoController(ILogger<CategoriaProdutoController> logger, ICategoriaProdutoUseCase categoriaUseCase) : ControllerBase
 {
-    private readonly ILogger<CategoriaProdutoController> _logger;
-    private readonly ICategoriaProdutoUseCase _categoriaUseCase;
-
-    public CategoriaProdutoController(ILogger<CategoriaProdutoController> logger, ICategoriaProdutoUseCase categoriaUseCase)
-    {
-        _logger = logger;
-        _categoriaUseCase = categoriaUseCase;
-    }
-
     /// <summary>
     /// Listar categorias de produto
     /// </summary>
@@ -30,10 +21,10 @@ public class CategoriaProdutoController : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Get()
     {
-        _logger.LogInformation("Listando categorias de produto");
+        logger.LogInformation("Listando categorias de produto");
         try
         {
-            var categorias = await _categoriaUseCase.TodasCategorias();
+            var categorias = await categoriaUseCase.TodasCategorias();
             return Ok(categorias);
         }
         catch (NotFoundException e)
@@ -42,7 +33,7 @@ public class CategoriaProdutoController : ControllerBase
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Listando categorias de produto");
+            logger.LogError(ex, "Listando categorias de produto");
             return StatusCode(StatusCodes.Status500InternalServerError, "Erro interno");
         }
     }
@@ -62,7 +53,7 @@ public class CategoriaProdutoController : ControllerBase
         try
         {
             CategoriaProduto categoriaProduto = (CategoriaProduto)categoria;
-            await _categoriaUseCase.CriarCategoriaAsync(categoriaProduto);
+            await categoriaUseCase.CriarCategoriaAsync(categoriaProduto);
             return Created($"/CategoriaProduto/{categoriaProduto.Id}", new { id = categoriaProduto.Id });
         }
 

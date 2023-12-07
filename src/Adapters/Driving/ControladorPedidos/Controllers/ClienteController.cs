@@ -6,17 +6,8 @@ namespace ControladorPedidos.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class ClienteController : ControllerBase
+public class ClienteController(ILogger<ClienteController> logger, IClienteUseCase clienteUseCase) : ControllerBase
 {
-    private readonly ILogger<ClienteController> _logger;
-    private readonly IClienteUseCase _clienteUseCase;
-
-    public ClienteController(ILogger<ClienteController> logger, IClienteUseCase clienteUseCase)
-    {
-        _logger = logger;
-        _clienteUseCase = clienteUseCase;
-    }
-
     /// <summary>
     /// Consulta Cliente por CPF
     /// </summary>
@@ -32,15 +23,15 @@ public class ClienteController : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> BuscarPorCpf(string cpf)
     {
-        _logger.LogInformation("Buscando cliente pelo cpf");
+        logger.LogInformation("Buscando cliente pelo cpf");
         try
         {
-            var cliente = await _clienteUseCase.BuscarPorCpf(cpf);
+            var cliente = await clienteUseCase.BuscarPorCpf(cpf);
             return Ok(cliente);
         }
         catch (ArgumentException ex)
         {
-            _logger.LogError(ex, "Erro ao buscar cliente pelo cpf");
+            logger.LogError(ex, "Erro ao buscar cliente pelo cpf");
             return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
         }
         catch (NotFoundException e)
@@ -49,7 +40,7 @@ public class ClienteController : ControllerBase
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Buscando cliente pelo cpf");
+            logger.LogError(ex, "Buscando cliente pelo cpf");
             return StatusCode(StatusCodes.Status500InternalServerError, "Erro interno");
         }
     }
@@ -67,21 +58,21 @@ public class ClienteController : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Post([FromBody] CriarClienteDto clienteDto)
     {
-        _logger.LogInformation("Criando cliente: {ClienteDto}", clienteDto);
+        logger.LogInformation("Criando cliente: {ClienteDto}", clienteDto);
         try
         {
             var cliente = (Cliente)clienteDto;
-            await _clienteUseCase.CriarAsync(cliente);
+            await clienteUseCase.CriarAsync(cliente);
             return CreatedAtAction(nameof(Post), new { id = cliente.Id });
         }
         catch (ArgumentException ex)
         {
-            _logger.LogError(ex, "Erro ao criar cliente: {ClienteDto}", clienteDto);
+            logger.LogError(ex, "Erro ao criar cliente: {ClienteDto}", clienteDto);
             return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Erro ao criar cliente: {ClienteDto}", clienteDto);
+            logger.LogError(ex, "Erro ao criar cliente: {ClienteDto}", clienteDto);
             return StatusCode(StatusCodes.Status500InternalServerError, "Erro interno");
         }
     }

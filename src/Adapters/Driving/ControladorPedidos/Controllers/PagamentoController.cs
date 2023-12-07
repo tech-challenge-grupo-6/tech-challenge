@@ -5,17 +5,8 @@ namespace ControladorPedidos.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class PagamentoController : ControllerBase
+public class PagamentoController(IPagamentoUseCase pagamentoUseCase, ILogger<PagamentoController> logger) : ControllerBase
 {
-    private readonly IPagamentoUseCase _pagamentoUseCase;
-    private readonly ILogger<PagamentoController> _logger;
-
-    public PagamentoController(IPagamentoUseCase pagamentoUseCase, ILogger<PagamentoController> logger)
-    {
-        _pagamentoUseCase = pagamentoUseCase;
-        _logger = logger;
-    }
-
     /// <summary>
     /// Realiza pagamento do pedido
     /// </summary>
@@ -29,13 +20,13 @@ public class PagamentoController : ControllerBase
     {
         try
         {
-            _logger.LogInformation("Efetuando pagamento do pedido {PedidoId}", pedidoId);
-            await _pagamentoUseCase.EfetuarMercadoPagoQRCodeAsync(pedidoId);
+            logger.LogInformation("Efetuando pagamento do pedido {PedidoId}", pedidoId);
+            await pagamentoUseCase.EfetuarMercadoPagoQRCodeAsync(pedidoId);
             return NoContent();
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Erro ao efetuar pagamento do pedido {PedidoId}", pedidoId);
+            logger.LogError(ex, "Erro ao efetuar pagamento do pedido {PedidoId}", pedidoId);
             return BadRequest($"Erro ao efetuar pagamento do pedido {pedidoId}");
         }
     }

@@ -3,29 +3,16 @@ using Microsoft.Extensions.Logging;
 
 namespace Application.UseCases;
 
-public class PedidoUseCase : IPedidoUseCase
+public class PedidoUseCase(IPedidoRepository pedidoRepository, ILogger<PedidoUseCase> logger,
+    IProdutoRepository produtoRepository, IClienteRepository clienteRepository) : IPedidoUseCase
 {
-    private readonly IPedidoRepository _pedidoRepository;
-    private readonly ILogger<PedidoUseCase> _logger;
-    private readonly IProdutoRepository _produtoRepository;
-    private readonly IClienteRepository _clienteRepository;
-
-    public PedidoUseCase(IPedidoRepository pedidoRepository, ILogger<PedidoUseCase> logger,
-    IProdutoRepository produtoRepository, IClienteRepository clienteRepository)
-    {
-        _pedidoRepository = pedidoRepository;
-        _logger = logger;
-        _produtoRepository = produtoRepository;
-        _clienteRepository = clienteRepository;
-    }
-
     public async Task AlterarStatusPedido(Guid id, Status novoStatus)
     {
         try
         {
-            _logger.LogInformation("Alterando status do pedido {id} para {status}", id, novoStatus.ToString());
+            logger.LogInformation("Alterando status do pedido {id} para {status}", id, novoStatus.ToString());
 
-            var pedido = await _pedidoRepository.GetById(id) ?? throw new NotFoundException("Pedido não encontrado");
+            var pedido = await pedidoRepository.GetById(id) ?? throw new NotFoundException("Pedido não encontrado");
             Status statusAtual = pedido.Status;
             if (novoStatus < statusAtual)
                 throw new BusinessException("Não é possível alterar o status do pedido para um status inferior ao atual");
@@ -36,37 +23,37 @@ public class PedidoUseCase : IPedidoUseCase
 
             pedido.Status = novoStatus;
 
-            await _pedidoRepository.UpdateStatus(pedido);
+            await pedidoRepository.UpdateStatus(pedido);
 
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Erro ao alterar status do pedido {id} para {status}", id, novoStatus.ToString());
+            logger.LogError(ex, "Erro ao alterar status do pedido {id} para {status}", id, novoStatus.ToString());
             throw;
         }
     }
 
     public async Task<IEnumerable<Pedido?>> TodosPedidos()
     {
-        _logger.LogInformation("Buscando todos os pedidos");
+        logger.LogInformation("Buscando todos os pedidos");
 
         try
         {
-            var pedidos = await _pedidoRepository.GetAll();
+            var pedidos = await pedidoRepository.GetAll();
             return pedidos.Any() ? pedidos : throw new NotFoundException("Pedidos não encontrados");
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Erro ao buscar todos os pedidos.");
+            logger.LogError(ex, "Erro ao buscar todos os pedidos.");
             throw;
         }
     }
 
     public async Task MontarPedido(Pedido pedido)
     {
-        _logger.LogInformation("Criando pedido");
+        logger.LogInformation("Criando pedido");
 
-        _ = await _clienteRepository.GetById((Guid)pedido.ClienteId!) ?? throw new NotFoundException("Cliente não encontrado");
+        _ = await clienteRepository.GetById((Guid)pedido.ClienteId!) ?? throw new NotFoundException("Cliente não encontrado");
 
         var produtoIds = pedido.Produtos.Select(p => p.Id);
 
@@ -74,17 +61,17 @@ public class PedidoUseCase : IPedidoUseCase
 
         foreach (var p in produtoIds)
         {
-            var produto = await _produtoRepository.GetById(p) ?? throw new NotFoundException("Produto não encontrado");
+            var produto = await produtoRepository.GetById(p) ?? throw new NotFoundException("Produto não encontrado");
             pedido.Produtos.Add(produto);
         }
 
         try
         {
-            if (PedidoValidador.IsValid(pedido)) await _pedidoRepository.Add(pedido);
+            if (PedidoValidador.IsValid(pedido)) await pedidoRepository.Add(pedido);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Erro ao criar pedido");
+            logger.LogError(ex, "Erro ao criar pedido");
             throw;
         }
     }

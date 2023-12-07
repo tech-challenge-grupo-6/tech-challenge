@@ -6,17 +6,8 @@ namespace ControladorPedidos.Controllers;
 
 [ApiController]
 [Route("[controller]")]
-public class PedidoController : ControllerBase
+public class PedidoController(IPedidoUseCase pedidoUseCase, ILogger<PedidoController> logger) : ControllerBase
 {
-    private readonly IPedidoUseCase _pedidoUseCase;
-    private readonly ILogger<PedidoController> _logger;
-
-    public PedidoController(IPedidoUseCase pedidoUseCase, ILogger<PedidoController> logger)
-    {
-        _pedidoUseCase = pedidoUseCase;
-        _logger = logger;
-    }
-
     /// <summary>
     /// Consulta todos os pedidos
     /// </summary>
@@ -30,10 +21,10 @@ public class PedidoController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Get()
     {
-        _logger.LogInformation("Listando todos os pedidos");
+        logger.LogInformation("Listando todos os pedidos");
         try
         {
-            var pedidos = await _pedidoUseCase.TodosPedidos();
+            var pedidos = await pedidoUseCase.TodosPedidos();
             return Ok(pedidos);
         }
         catch (NotFoundException e)
@@ -42,7 +33,7 @@ public class PedidoController : ControllerBase
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Erro ao listar os pedidos");
+            logger.LogError(ex, "Erro ao listar os pedidos");
             return StatusCode(StatusCodes.Status500InternalServerError, "Erro interno");
         }
     }
@@ -61,22 +52,22 @@ public class PedidoController : ControllerBase
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult> Post([FromBody] CriarPedidoDto pedidoDto)
     {
-        _logger.LogInformation("Pedido pedido: {PedidoDto}", pedidoDto);
+        logger.LogInformation("Pedido pedido: {PedidoDto}", pedidoDto);
         try
         {
             var pedido = (Pedido)pedidoDto;
 
-            await _pedidoUseCase.MontarPedido(pedido);
+            await pedidoUseCase.MontarPedido(pedido);
             return CreatedAtAction(nameof(Post), new { id = pedido.Id });
         }
         catch (ArgumentException ex)
         {
-            _logger.LogError(ex, "Erro ao criar pedido: {PedidoDto}", pedidoDto);
+            logger.LogError(ex, "Erro ao criar pedido: {PedidoDto}", pedidoDto);
             return StatusCode(StatusCodes.Status400BadRequest, ex.Message);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Erro ao criar pedido: {PedidoDto}", pedidoDto);
+            logger.LogError(ex, "Erro ao criar pedido: {PedidoDto}", pedidoDto);
             return StatusCode(StatusCodes.Status500InternalServerError, "Erro interno");
         }
 
@@ -98,18 +89,18 @@ public class PedidoController : ControllerBase
     {
         try
         {
-            _logger.LogInformation("Mudando status do pedido {pedido} para 'Em Pregresso'", id);
-            await _pedidoUseCase.AlterarStatusPedido(id, Status.EmProgresso);
+            logger.LogInformation("Mudando status do pedido {pedido} para 'Em Pregresso'", id);
+            await pedidoUseCase.AlterarStatusPedido(id, Status.EmProgresso);
             return NoContent();
         }
         catch (Exception ex) when (ex.GetType() == typeof(BusinessException) || ex.GetType() == typeof(NotFoundException))
         {
-            _logger.LogError(ex, "Erro ao mudar status do pedido {pedido} para 'Em Pregresso'", id);
+            logger.LogError(ex, "Erro ao mudar status do pedido {pedido} para 'Em Pregresso'", id);
             return BadRequest(ex.Message);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Erro ao mudar status do pedido {pedido} para 'Em Pregresso'", id);
+            logger.LogError(ex, "Erro ao mudar status do pedido {pedido} para 'Em Pregresso'", id);
             return StatusCode(StatusCodes.Status500InternalServerError);
         }
     }
@@ -130,18 +121,18 @@ public class PedidoController : ControllerBase
     {
         try
         {
-            _logger.LogInformation("Mudando status do pedido {pedido} para 'Pronto'", id);
-            await _pedidoUseCase.AlterarStatusPedido(id, Status.Pronto);
+            logger.LogInformation("Mudando status do pedido {pedido} para 'Pronto'", id);
+            await pedidoUseCase.AlterarStatusPedido(id, Status.Pronto);
             return NoContent();
         }
         catch (Exception ex) when (ex.GetType() == typeof(BusinessException) || ex.GetType() == typeof(NotFoundException))
         {
-            _logger.LogError(ex, "Erro ao mudar status do pedido {pedido} para 'Em Pregresso'", id);
+            logger.LogError(ex, "Erro ao mudar status do pedido {pedido} para 'Em Pregresso'", id);
             return BadRequest(ex.Message);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Erro ao mudar status do pedido {pedido} para 'Pronto'", id);
+            logger.LogError(ex, "Erro ao mudar status do pedido {pedido} para 'Pronto'", id);
             return StatusCode(StatusCodes.Status500InternalServerError);
         }
     }
@@ -162,18 +153,18 @@ public class PedidoController : ControllerBase
     {
         try
         {
-            _logger.LogInformation("Mudando status do pedido {pedido} para 'Finalizado'", id);
-            await _pedidoUseCase.AlterarStatusPedido(id, Status.Finalizado);
+            logger.LogInformation("Mudando status do pedido {pedido} para 'Finalizado'", id);
+            await pedidoUseCase.AlterarStatusPedido(id, Status.Finalizado);
             return NoContent();
         }
         catch (Exception ex) when (ex.GetType() == typeof(BusinessException) || ex.GetType() == typeof(NotFoundException))
         {
-            _logger.LogError(ex, "Erro ao mudar status do pedido {pedido} para 'Em Pregresso'", id);
+            logger.LogError(ex, "Erro ao mudar status do pedido {pedido} para 'Em Pregresso'", id);
             return BadRequest(ex.Message);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Erro ao mudar status do pedido {pedido} para 'Finalizado'", id);
+            logger.LogError(ex, "Erro ao mudar status do pedido {pedido} para 'Finalizado'", id);
             return StatusCode(StatusCodes.Status500InternalServerError);
         }
     }
