@@ -1,6 +1,6 @@
 # Please refer https://aka.ms/HTTPSinContainer on how to setup an https developer certificate for your ASP.NET Core service.
 
-version: "3.4"
+version: '3.4'
 
 services:
   database_mysql:
@@ -18,11 +18,11 @@ services:
       - controladorpedidos-network
     restart: always
 
-  controladorpedidos:
-    image: controladorpedidos
+  controladorpedidosapp:
+    image: controladorpedidosapp
     build:
       context: .
-      dockerfile: src/Adapters/Driving/ControladorPedidos/Dockerfile
+      dockerfile: src/ControladorPedidos.App/Dockerfile
     ports:
       - 5003:5003
     environment:
