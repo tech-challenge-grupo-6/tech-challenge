@@ -5,7 +5,7 @@ metadata:
   labels:
     app: controladorpedidos-app
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       app: controladorpedidos-app
@@ -16,10 +16,10 @@ spec:
     spec:
       containers:
         - name: controladorpedidos-app
-          image: <your-docker-image>
+          image: ghcr.io/renansx/controladorpedidos-app:latest
           env:
-            - name: ConnectionString__DefaultConnection
-              value: "Server=mysql-service;Database=controlador_pedidos;User=root;Password=P@ssWord;port=3307"
+            - name: ConnectionStrings__DefaultConnection
+              value: "Server=mysql-service;Database=controlador_pedidos;User=root;Password=P@ssWord;port=3306;SslMode=None"
           ports:
             - containerPort: 5003
           resources:
