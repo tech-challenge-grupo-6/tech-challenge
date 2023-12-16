@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: controladorpedidos-app
+  labels:
+    app: controladorpedidos-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: controladorpedidos-app
+  template:
+    metadata:
+      labels:
+        app: controladorpedidos-app
+    spec:
+      containers:
+        - name: controladorpedidos-app
+          image: <your-docker-image>
+          env:
+            - name: ConnectionString__DefaultConnection
+              value: "Server=mysql-service;Database=controlador_pedidos;User=root;Password=P@ssWord;port=3307"
+          ports:
+            - containerPort: 5003
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+            requests:
+              cpu: 200m
+              memory: 256Mi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: controladorpedidos-app
+spec:
+  selector:
+    app: controladorpedidos-app
+  ports:
+    - protocol: TCP
+      port: 5003
+      targetPort: 5003
+  type: LoadBalancer
