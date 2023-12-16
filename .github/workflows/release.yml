@@ -4,6 +4,8 @@ on:
   push:
     branches: [kubernetes-files]
 
+permissions: write-all
+
 jobs:
   build-push:
     runs-on: ubuntu-latest
