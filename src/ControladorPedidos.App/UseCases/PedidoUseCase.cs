@@ -1,9 +1,9 @@
+using ControladorPedidos.App.Contracts;
 using ControladorPedidos.App.Entities;
 using ControladorPedidos.App.Entities.Exceptions;
 using ControladorPedidos.App.Entities.Repositories;
 using ControladorPedidos.App.Entities.Shared;
 using ControladorPedidos.App.Entities.Validators;
-using ControladorPedidos.App.UseCases.Interfaces;
 
 namespace ControladorPedidos.App.UseCases;
 

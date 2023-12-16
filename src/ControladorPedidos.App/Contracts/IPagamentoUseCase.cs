@@ -1,4 +1,4 @@
-﻿namespace ControladorPedidos.App.UseCases.Interfaces;
+﻿namespace ControladorPedidos.App.Contracts;
 
 public interface IPagamentoUseCase
 {

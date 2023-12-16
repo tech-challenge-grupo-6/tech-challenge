@@ -1,7 +1,7 @@
 using ControladorPedidos.App.Entities;
 using ControladorPedidos.App.Entities.Shared;
 
-namespace ControladorPedidos.App.UseCases.Interfaces;
+namespace ControladorPedidos.App.Contracts;
 
 public interface IPedidoUseCase
 {

@@ -1,4 +1,4 @@
-﻿using ControladorPedidos.App.UseCases.Interfaces;
+﻿using ControladorPedidos.App.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ControladorPedidos.App.Controllers;

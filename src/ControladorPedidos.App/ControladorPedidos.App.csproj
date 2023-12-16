@@ -24,6 +24,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Contracts/" />
     <Folder Include="Controllers/" />
     <Folder Include="Entities/" />
     <Folder Include="Entities/Exceptions/" />
@@ -33,7 +34,7 @@
     <Folder Include="Entities/Validators/" />
     <Folder Include="Infrastructure/DataBase/Mappings/" />
     <Folder Include="Presenters/" />
-    <Folder Include="UseCases/Interfaces/" />
+    <Folder Include="UseCases/" />
   </ItemGroup>
 
 </Project>

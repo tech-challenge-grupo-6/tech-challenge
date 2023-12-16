@@ -1,4 +1,4 @@
-﻿using ControladorPedidos.App.UseCases.Interfaces;
+﻿using ControladorPedidos.App.Contracts;
 
 namespace ControladorPedidos.App.UseCases.DependencyInjection;
 

@@ -1,6 +1,6 @@
 using ControladorPedidos.App.Entities;
 
-namespace ControladorPedidos.App.UseCases.Interfaces;
+namespace ControladorPedidos.App.Contracts;
 
 public interface IClienteUseCase
 {

@@ -1,7 +1,7 @@
+using ControladorPedidos.App.Contracts;
 using ControladorPedidos.App.Entities;
 using ControladorPedidos.App.Entities.Exceptions;
 using ControladorPedidos.App.Presenters;
-using ControladorPedidos.App.UseCases.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ControladorPedidos.App.Controllers;
