@@ -1,8 +1,9 @@
 name: Build and Push Docker Image
 
 on:
-  push:
-    branches: [kubernetes-files]
+  release:
+    types:
+      - published
 
 permissions: write-all
 
@@ -18,7 +19,9 @@ jobs:
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: Docker Build
-        run: docker build . -f src/ControladorPedidos.App/Dockerfile -t ghcr.io/renansx/controladorpedidos-app:latest
+        run: docker build . -f src/ControladorPedidos.App/Dockerfile -t ghcr.io/renansx/controladorpedidos-app:latest -t ghcr.io/renansx/controladorpedidos-app:${{ github.event.release.tag_name }}
 
       - name: Docker Push
-        run: docker push ghcr.io/renansx/controladorpedidos-app:latest
+        run: |
+          docker push ghcr.io/renansx/controladorpedidos-app:latest
+          docker push ghcr.io/renansx/controladorpedidos-app:${{ github.event.release.tag_name }}
