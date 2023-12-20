@@ -2,6 +2,7 @@
 using ControladorPedidos.App.Entities;
 using ControladorPedidos.App.Entities.Repositories;
 using ControladorPedidos.App.Entities.Shared;
+using ControladorPedidos.App.Entities.Exceptions;
 
 namespace ControladorPedidos.App.UseCases;
 
@@ -28,6 +29,7 @@ public class PagamentoUseCase(IPedidoRepository pedidoRepository, ILogger<Pagame
 
             Pagamento pagamento = pedido.GerarPagamento(MetodoPagamento.MercadoPagoQRCode);
 
+            //ToDo
             //Futuramente introduzir lógica de pagamento externo
 
             await pagamentoRepository.Add(pagamento);
@@ -42,4 +44,20 @@ public class PagamentoUseCase(IPedidoRepository pedidoRepository, ILogger<Pagame
             throw;
         }
     }
+
+    public async Task<Pagamento> ConsultarPagamentoPeloPedido(Guid pedidoId)
+    {
+        logger.LogInformation("Consultando status do pagamento do pedido");
+        try
+        {
+            var result = await pagamentoRepository.GetByPedidoId(pedidoId) ?? throw new NotFoundException("Pagamento não encontrado.");
+            return result;
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Erro ao consultar status de pagamento do pedido {PedidoId}", pedidoId);
+            throw;
+        }
+    }
+
 }
