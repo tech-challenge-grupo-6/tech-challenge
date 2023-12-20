@@ -1,4 +1,5 @@
 ﻿using ControladorPedidos.App.Contracts;
+using ControladorPedidos.App.Entities.Exceptions;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ControladorPedidos.App.Controllers;
@@ -49,7 +50,14 @@ public class PagamentoController(IPagamentoUseCase pagamentoUseCase, ILogger<Pag
         {
             logger.LogInformation("Consultando status pagamento do pedido {PedidoId}", pedidoId);
             var pagamento = await pagamentoUseCase.ConsultarPagamentoPeloPedido(pedidoId);
-            return Ok(pagamento);
+            var successResponse = new { status = "Aprovado" };
+            return Ok(successResponse);
+        }
+        catch (NotFoundException e)
+        {
+            logger.LogError(e.Message);
+            var errorResponse = new { status = "Não Aprovado" };
+            return NotFound(errorResponse);
         }
         catch (Exception ex)
         {
