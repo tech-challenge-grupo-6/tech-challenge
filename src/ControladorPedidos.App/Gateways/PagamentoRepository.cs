@@ -13,7 +13,7 @@ public class PagamentoRepository(DatabaseContext dbContext) : IPagamentoReposito
         await dbContext.SaveChangesAsync();
     }
 
-    public async Task<Pagamento> GetByPedidoId(Guid pedidoId)
+    public async Task<Pagamento?> GetByPedidoId(Guid pedidoId)
     {
         return await dbContext.Pagamentos.FirstOrDefaultAsync(p => p.PedidoId == pedidoId);
     }
