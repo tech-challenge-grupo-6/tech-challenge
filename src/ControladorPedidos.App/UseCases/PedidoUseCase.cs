@@ -44,13 +44,23 @@ public class PedidoUseCase(IPedidoRepository pedidoRepository, ILogger<PedidoUse
         try
         {
             var pedidos = await pedidoRepository.GetAll();
-            return pedidos.Any() ? pedidos : throw new NotFoundException("Pedidos não encontrados");
+           var pedidosOrdenados = OrdenarPedidos(pedidos);
+
+            return pedidosOrdenados.Any() ? pedidosOrdenados : throw new NotFoundException("Pedidos não encontrados");
         }
         catch (Exception ex)
         {
             logger.LogError(ex, "Erro ao buscar todos os pedidos.");
             throw;
         }
+    }
+
+    public IEnumerable<Pedido> OrdenarPedidos(IEnumerable<Pedido> pedidos)
+    {
+        return pedidos
+        .Where(x => x.Status != Status.Finalizado)
+        .OrderByDescending(x => x.Status)
+        .ThenBy(x => x.CriadoEm);
     }
 
     public async Task MontarPedido(Pedido pedido)
