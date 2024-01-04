@@ -22,21 +22,40 @@ public class PagamentoController : ControllerBase
     /// <param name="pedidoId">Id do pedido</param>
     /// <response code="204">Pagamento do pedido realizado com sucesso.</response>
     /// <response code="400">Erro ao fazer a Request.</response>
+
+    /*    [HttpPut("pagar/{pedidoId}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<IActionResult> Put(Guid pedidoId)
+        {
+            try
+            {
+                _logger.LogInformation("Efetuando pagamento do pedido {PedidoId}", pedidoId);
+                await _pagamentoUseCase.EfetuarMercadoPagoQRCodeAsync(pedidoId);
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Erro ao efetuar pagamento do pedido {PedidoId}", pedidoId);
+                return BadRequest($"Erro ao efetuar pagamento do pedido {pedidoId}");
+            }
+        }
+    }
+    */
+
     [HttpPut("pagar/{pedidoId}")]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Put(Guid pedidoId)
     {
         try
         {
-            _logger.LogInformation("Efetuando pagamento do pedido {PedidoId}", pedidoId);
-            await _pagamentoUseCase.EfetuarMercadoPagoQRCodeAsync(pedidoId);
-            return NoContent();
+            _logger.LogInformation("Efetuando pagamento fake do pedido {PedidoId}", pedidoId);
+            var resultado = await _pagamentoUseCase.EfetuarFakeCheckoutAsync(pedidoId);
+            return Ok(resultado); // Retorna um resultado de sucesso para teste
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Erro ao efetuar pagamento do pedido {PedidoId}", pedidoId);
-            return BadRequest($"Erro ao efetuar pagamento do pedido {pedidoId}");
+            _logger.LogError(ex, "Erro ao efetuar pagamento fake do pedido {PedidoId}", pedidoId);
+            return BadRequest($"Erro ao efetuar pagamento fake do pedido {pedidoId}");
         }
     }
 }
