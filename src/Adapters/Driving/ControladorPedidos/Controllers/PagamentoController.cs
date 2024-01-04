@@ -43,19 +43,19 @@ public class PagamentoController : ControllerBase
     }
     */
 
-    [HttpPut("pagar/{pedidoId}")]
-    public async Task<IActionResult> Put(Guid pedidoId)
+    [HttpPut("fakecheckout/{pedidoId}")]
+    public async Task<IActionResult> FakeCheckout(Guid pedidoId)
     {
         try
         {
-            _logger.LogInformation("Efetuando pagamento fake do pedido {PedidoId}", pedidoId);
-            var resultado = await _pagamentoUseCase.EfetuarFakeCheckoutAsync(pedidoId);
-            return Ok(resultado); // Retorna um resultado de sucesso para teste
+            _logger.LogInformation("Iniciando fake checkout do pedido {PedidoId}", pedidoId);
+            string resultado = await _pagamentoUseCase.EfetuarFakeCheckoutAsync(pedidoId);
+            return Ok(resultado);
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Erro ao efetuar pagamento fake do pedido {PedidoId}", pedidoId);
-            return BadRequest($"Erro ao efetuar pagamento fake do pedido {pedidoId}");
+            _logger.LogError(ex, "Erro durante o fake checkout do pedido {PedidoId}", pedidoId);
+            return BadRequest($"Erro durante o fake checkout do pedido {pedidoId}");
         }
     }
 }
