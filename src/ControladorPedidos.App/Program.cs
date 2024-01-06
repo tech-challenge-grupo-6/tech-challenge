@@ -18,6 +18,7 @@ builder.Services.AddControllers().AddJsonOptions(x => x.JsonSerializerOptions.Re
 builder.Services.AddRepositories();
 builder.Services.AddUseCases();
 builder.Services.AddDatabase(builder.Configuration);
+builder.Services.AddHttpClient();
 
 var app = builder.Build();
 

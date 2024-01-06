@@ -44,7 +44,7 @@ public class PedidoUseCase(IPedidoRepository pedidoRepository, ILogger<PedidoUse
         try
         {
             var pedidos = await pedidoRepository.GetAll();
-           var pedidosOrdenados = OrdenarPedidos(pedidos);
+            var pedidosOrdenados = OrdenarPedidos(pedidos!);
 
             return pedidosOrdenados.Any() ? pedidosOrdenados : throw new NotFoundException("Pedidos não encontrados");
         }

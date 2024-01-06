@@ -6,4 +6,5 @@ public interface IPagamentoUseCase
 {
     Task EfetuarMercadoPagoQRCodeAsync(Guid pedidoId);
     Task<Pagamento> ConsultarPagamentoPeloPedido(Guid pedidoId);
+    Task<Guid?> ConcluirPagamento(Guid pedidoId, bool aprovado, string? motivo);
 }

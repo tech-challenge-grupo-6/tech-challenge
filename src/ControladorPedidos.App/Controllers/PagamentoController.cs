@@ -1,5 +1,6 @@
 ﻿using ControladorPedidos.App.Contracts;
 using ControladorPedidos.App.Entities.Exceptions;
+using ControladorPedidos.App.Presenters;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ControladorPedidos.App.Controllers;
@@ -23,7 +24,7 @@ public class PagamentoController(IPagamentoUseCase pagamentoUseCase, ILogger<Pag
         {
             logger.LogInformation("Efetuando pagamento do pedido {PedidoId}", pedidoId);
             await pagamentoUseCase.EfetuarMercadoPagoQRCodeAsync(pedidoId);
-            return CreatedAtAction(nameof(Put), new { id = pedidoId });
+            return CreatedAtAction(nameof(Put), new { message = "Pedido de pagamento efetuado com sucesso" });
         }
         catch (Exception ex)
         {
@@ -31,6 +32,7 @@ public class PagamentoController(IPagamentoUseCase pagamentoUseCase, ILogger<Pag
             return BadRequest($"Erro ao efetuar pagamento do pedido {pedidoId}");
         }
     }
+
     /// <summary>
     /// Verifica o status do pagamento do pedido
     /// </summary>
@@ -63,6 +65,36 @@ public class PagamentoController(IPagamentoUseCase pagamentoUseCase, ILogger<Pag
         {
             logger.LogError(ex, "Erro ao tentar consultar o status de pagamento do pedido {PedidoId}", pedidoId);
             return BadRequest($"Erro ao tentar consultar o status de pagamento do pedido {pedidoId}");
+        }
+    }
+
+    /// <summary>
+    /// Realiza conclusão do pagamento do pedido
+    /// </summary>
+    /// <param name="pagamentoWebhookDto">Dados do pagamento</param>
+    /// <response code="201">Pagamento do pedido realizado com sucesso.</response>
+    /// <response code="400">Erro ao fazer a Request.</response>
+    [HttpPost("webhook")]
+    [ProducesResponseType(StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> Post([FromBody] PagamentoWebhookDto pagamentoWebhookDto)
+    {
+        var (pedidoId, aprovado, motivo) = pagamentoWebhookDto;
+        try
+        {
+
+            logger.LogInformation("Concluindo pagamento do pedido {PedidoId}", pedidoId);
+            Guid? pagamentoId = await pagamentoUseCase.ConcluirPagamento(pedidoId, aprovado, motivo);
+            if (pagamentoId is null)
+            {
+                return BadRequest($"Pagamento do pedido {pedidoId} não foi aprovado. Motivo: {motivo}");
+            }
+            return CreatedAtAction(nameof(Post), new { id = pagamentoId });
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Erro ao efetuar pagamento do pedido {PedidoId}", pedidoId);
+            return BadRequest($"Erro ao efetuar pagamento do pedido {pedidoId}");
         }
     }
 }

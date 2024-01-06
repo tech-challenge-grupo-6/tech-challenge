@@ -33,7 +33,6 @@
     <Folder Include="Entities/Shared/" />
     <Folder Include="Entities/Validators/" />
     <Folder Include="Infrastructure/DataBase/Mappings/" />
-    <Folder Include="Presenters/" />
     <Folder Include="UseCases/" />
   </ItemGroup>
 

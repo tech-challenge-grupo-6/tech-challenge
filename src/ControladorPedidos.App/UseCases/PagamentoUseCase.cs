@@ -3,10 +3,11 @@ using ControladorPedidos.App.Entities;
 using ControladorPedidos.App.Entities.Repositories;
 using ControladorPedidos.App.Entities.Shared;
 using ControladorPedidos.App.Entities.Exceptions;
+using ControladorPedidos.App.Presenters;
 
 namespace ControladorPedidos.App.UseCases;
 
-public class PagamentoUseCase(IPedidoRepository pedidoRepository, ILogger<PagamentoUseCase> logger, IPagamentoRepository pagamentoRepository) : IPagamentoUseCase
+public class PagamentoUseCase(IPedidoRepository pedidoRepository, ILogger<PagamentoUseCase> logger, IPagamentoRepository pagamentoRepository, IConfiguration configuration, HttpClient httpClient) : IPagamentoUseCase
 {
     public async Task EfetuarMercadoPagoQRCodeAsync(Guid pedidoId)
     {
@@ -27,15 +28,11 @@ public class PagamentoUseCase(IPedidoRepository pedidoRepository, ILogger<Pagame
                 throw new Exception($"Pedido {pedidoId} não pode ser pago");
             }
 
-            Pagamento pagamento = pedido.GerarPagamento(MetodoPagamento.MercadoPagoQRCode);
+            string? pagamentoUrl = configuration.GetValue<string>("PagamentoUrl");
+            PagamentoDto pagamentoDto = new(pedidoId, pedido.ValorTotal, pedido.ClienteId);
+            await httpClient.PostAsJsonAsync(pagamentoUrl, pagamentoDto);
 
-            //ToDo
-            //Futuramente introduzir lógica de pagamento externo
-
-            await pagamentoRepository.Add(pagamento);
-            await pedidoRepository.UpdateStatus(pedido);
-
-            logger.LogInformation("Pagamento do pedido {PedidoId} efetuado com sucesso", pedidoId);
+            logger.LogInformation("Pagamento do pedido {PedidoId} solicitado com sucesso", pedidoId);
 
         }
         catch (Exception ex)
@@ -60,4 +57,30 @@ public class PagamentoUseCase(IPedidoRepository pedidoRepository, ILogger<Pagame
         }
     }
 
+    public async Task<Guid?> ConcluirPagamento(Guid pedidoId, bool aprovado, string? motivo)
+    {
+        logger.LogInformation("Concluindo pagamento do pedido {PedidoId}", pedidoId);
+        try
+        {
+            if (!aprovado)
+            {
+                logger.LogWarning("Pagamento do pedido {PedidoId} não foi aprovado, motivo: {motivo}", pedidoId, motivo);
+                return null;
+            }
+            else
+            {
+                var pedido = await pedidoRepository.GetById(pedidoId) ?? throw new NotFoundException("Pedido não encontrado.");
+                Pagamento pagamento = pedido.GerarPagamento(MetodoPagamento.MercadoPagoQRCode);
+                await pagamentoRepository.Add(pagamento);
+                await pedidoRepository.UpdateStatus(pedido);
+                logger.LogInformation("Pagamento do pedido {PedidoId} concluído com sucesso", pedidoId);
+                return pagamento.Id;
+            }
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Erro ao concluir pagamento do pedido {PedidoId}", pedidoId);
+            throw;
+        }
+    }
 }
