@@ -153,3 +153,45 @@ Na solução proposta, podemos identificar os seguintes domínios:
 
 [C4 Model Context](https://viewer.diagrams.net/?page-id=GuoaQqkMoZisvNMQGBI1&highlight=0000ff&edit=_blank&layers=1&nav=1&page-id=GuoaQqkMoZisvNMQGBI1#G1dqaws7gfDaEbjrGQXOA6lcgHaW-upsGO)
 ![c4-model-cointext](./documentation/arquitetura/diagrama-controlador-pedidos-C4.drawio.png)
+
+## Como inicializar a aplicação localmente
+
+- Pré-requisitos minimos:
+-- kubernetes
+-- minikube
+
+- Acesse a pasta raiz do projeto `TECH-CHALLENGE`
+- Execute os seguintes comandos:  
+-- `minikube start`
+-- `kubectl apply -f kubernetes/`
+-- `minikube service controladorpedidos-app`
+- Após executar os comandos retornará uma url com acesso ao swagger
+
+> Para acessar o Swagger, é necessário executar os comandos acima e após.
+- copie a url e acrescente: `/swagger/index.html`. Ex: `http://172.21.13.33:32607/swagger/index.html`
+- Agora a aplicação já estara pronta para uso.
+
+## Como simular o fluxo de pagamento com webhook
+
+- A aplicação conta com seeds que são disparados no momento que a aplicação fica disponivel, fazendo insert's de varios registros para teste.
+
+- Para testar o fluxo de pagamento utilizando o weebhook é preciso seguir os seguintes passos.
+
+-- Crie um cliente no endpoint abaixo e guarde o Id retornado.
+(./documentation/util/cliente_post.png)
+
+-- Consulte o endpoint abaixo e pegue um Id categoria. 
+(./documentation/util/categoria_produto_get.png)
+
+-- Consulte o endpoint abaixo, passando o Id categoria e guarde um Id de produto.
+(./documentation/util/produto_get.png)
+
+-- Agora será preciso criar um pedido no endpoint abaixo, passe o Id do cliente e o Id do produto. 
+(./documentation/util/pedido_post.png)
+-- Após criar o pedido no endpoint `/Pedido` o mesmo irá retornar o Id do pedido.
+
+-- Ao fazer o pagamento no endpoint abaixo.
+(./documentation/util/pagamento_put.png)
+
+-- Será possível validar o pagamento no endpoint abaixo.
+(./documentation/util/pagamento_check_get.png)
