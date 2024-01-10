@@ -142,14 +142,16 @@ Na solução proposta, podemos identificar os seguintes domínios:
 
 ![preparacao-e-entrega-do-pedido](./documentation/linguagem-ubiqua/Preparação%20e%20entrega%20do%20pedido_2023-10-28.png)
 
-### Event Storming
+## Event Storming
 
 ![event-storming](./documentation/linguagem-ubiqua/event-storming.png)
 
-### Arquitetura
+## Arquitetura
 
 [Desenho da arquitetura](https://viewer.diagrams.net/?page-id=5ss_QfSTIuFavA6AzmXy&highlight=0000ff&edit=_blank&layers=1&nav=1#G1dqaws7gfDaEbjrGQXOA6lcgHaW-upsGO)
+
 ![desenho-arquitetura](./documentation/arquitetura/diagrama-controlador-pedidos-desenho%20arquitetural.drawio.png)
 
 [C4 Model Context](https://viewer.diagrams.net/?page-id=GuoaQqkMoZisvNMQGBI1&highlight=0000ff&edit=_blank&layers=1&nav=1&page-id=GuoaQqkMoZisvNMQGBI1#G1dqaws7gfDaEbjrGQXOA6lcgHaW-upsGO)
+
 ![c4-model-cointext](./documentation/arquitetura/diagrama-controlador-pedidos-C4.drawio.png)
