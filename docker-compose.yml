@@ -18,20 +18,40 @@ services:
       - controladorpedidos-network
     restart: always
 
-  controladorpedidos:
-    image: controladorpedidos
+  controladorpagamentofake:
+    image: controladorpagamentofake
     build:
       context: .
-      dockerfile: src/Adapters/Driving/ControladorPedidos/Dockerfile
+      dockerfile: src/ControladorPagamento.Fake/Dockerfile
+    ports:
+      - 5083:5083
+    expose:
+      - 5083
+    environment:
+      - TaxaAprovacao=100
+      - WebhookUrl=http://controladorpedidosapp:5003/Pagamento/webhook
+    networks:
+      - controladorpedidos-network
+    restart: on-failure
+
+  controladorpedidosapp:
+    image: controladorpedidosapp
+    build:
+      context: .
+      dockerfile: src/ControladorPedidos.App/Dockerfile
     ports:
       - 5003:5003
+    expose:
+      - 5003
     environment:
       - ConnectionStrings__DefaultConnection=server=database_mysql;database=controlador_pedidos;user=root;password=P@ssWord
+      - PagamentoUrl=http://controladorpagamentofake:5083/pagar
     networks:
       - controladorpedidos-network
     restart: on-failure
     depends_on:
       - database_mysql
+      - controladorpagamentofake
 
 networks:
   controladorpedidos-network:

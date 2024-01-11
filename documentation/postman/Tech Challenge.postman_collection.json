@@ -1,9 +1,9 @@
 {
 	"info": {
-		"_postman_id": "e69bf1d3-93f0-41c8-a755-849ddcfcdac2",
+		"_postman_id": "65a361af-60a1-404c-8fd3-b97519269a89",
 		"name": "Tech Challenge",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-		"_exporter_id": "30666249"
+		"_exporter_id": "15238472"
 	},
 	"item": [
 		{
@@ -415,6 +415,73 @@
 								"Pagamento",
 								"pagar",
 								"228e61bc-9f42-4a4f-95f5-521068e0c682"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Verificar Status Pedido",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5003/Pagamento/check/228e61bc-9f42-4a4f-95f5-521068e0c682?accept=*/*",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5003",
+							"path": [
+								"Pagamento",
+								"check",
+								"228e61bc-9f42-4a4f-95f5-521068e0c682"
+							],
+							"query": [
+								{
+									"key": "accept",
+									"value": "*/*"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Webhook",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "accept",
+								"value": "*/*",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"pedidoId\": \"228e61bc-9f42-4a4f-95f5-521068e0c682\",\r\n  \"aprovado\": true,\r\n  \"motivo\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:5003/Pagamento/webhook",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5003",
+							"path": [
+								"Pagamento",
+								"webhook"
 							]
 						}
 					},
