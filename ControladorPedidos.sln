@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControladorPedidos.App", "s
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ControladorPagamento.Fake", "src\ControladorPagamento.Fake\ControladorPagamento.Fake.csproj", "{94AB8DA6-250C-44A1-BB6E-B375576E5576}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Driven", "Driven", "{1E53600A-CC07-4757-9575-D54D0C2A5008}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseAdapters", "src\Adapters\Driven\DatabaseAdapters\DatabaseAdapters.csproj", "{B5051577-81CB-4621-831E-E81A38971830}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

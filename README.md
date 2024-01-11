@@ -105,10 +105,6 @@ A lanchonete de bairro, devido ao seu sucesso crescente, está expandindo suas o
 
 - Emissão de relatórios gerais
 
-## Considerações Finais
-
-O sistema de controle de pedidos é essencial para a expansão da lanchonete, garantindo eficiência operacional e satisfação do cliente. Com a devida implementação das funcionalidades e domínios descritos neste documento, a lanchonete estará preparada para atender seus clientes de maneira eficiente e gerenciar seus pedidos e estoques de forma adequada. Isso contribuirá para o sucesso contínuo do negócio e a satisfação dos clientes.
-
 ## Domínios
 
 Na solução proposta, podemos identificar os seguintes domínios:
