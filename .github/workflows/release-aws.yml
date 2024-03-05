@@ -1,0 +1,86 @@
+name: Build and Push Docker Image AWS
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: "Configure AWS Credentials"
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Get ECR Urls
+        run: |
+          controladorpedidos-app-ecr=$(aws ecr describe-repositories --repository-names controladorpedidos-app --region us-east-1 | jq -r '.repositories[0].repositoryUri')
+          controladorpagamento-fake-ecr=$(aws ecr describe-repositories --repository-names controladorpagamento-fake --region us-east-1 | jq -r '.repositories[0].repositoryUri')
+          echo "CONTROLADORPEDIDOS_APP_ECR=$controladorpedidos-app-ecr" >> $GITHUB_ENV
+          echo "CONTROLADORPAGAMENTO_FAKE_ECR=$controladorpagamento-fake-ecr" >> $GITHUB_ENV
+
+      - name: Docker Login to ECR
+        run: |
+          aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{ env.CONTROLADORPEDIDOS_APP_ECR }}
+          aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin ${{ env.CONTROLADORPAGAMENTO_FAKE_ECR }}
+
+      - name: Docker Build Controlador Pedidos
+        run: |
+          docker build . -f src/ControladorPedidos.App/Dockerfile -t ${{ env.CONTROLADORPEDIDOS_APP_ECR }}/controladorpedidos-app:latest
+
+      - name: Docker Build Controlador Pagamento
+        run: |
+          docker build . -f src/ControladorPagamento.Fake/Dockerfile -t ${{ env.CONTROLADORPAGAMENTO_FAKE_ECR }}/controladorpagamento-fake:latest
+
+      - name: Docker Push
+        run: |
+          docker push ${{ env.CONTROLADORPEDIDOS_APP_ECR }}/controladorpedidos-app:latest
+          docker push ${{ env.CONTROLADORPAGAMENTO_FAKE_ECR }}/controladorpagamento-fake:latest
+
+  eks-deploy:
+    runs-on: ubuntu-latest
+    env:
+      CONTROLADOR_PEDIDO_IMAGE_NAME=${{ env.CONTROLADORPEDIDOS_APP_ECR }}/controladorpedidos-app:latest
+      CONTROLADOR_PAGAMENTO_IMAGE_NAME=${{ env.CONTROLADORPAGAMENTO_FAKE_ECR }}/controladorpagamento-fake:latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: "Configure AWS Credentials"
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Update kubeconfig
+        run: |
+          aws eks update-kubeconfig --region us-east-1 --name tech-challenge-eks
+
+      - name: Get RDS instance name
+        run: |
+          AWS_RDS_INSTANCE_NAME=$(aws rds describe-db-instances --region us-east-1 | jq -r '.DBInstances[0].DBInstanceIdentifier')
+          echo "AWS_RDS_INSTANCE_NAME=$AWS_RDS_INSTANCE_NAME" >> $GITHUB_ENV
+
+      - name: Replace tokens in Kubernetes files
+        uses: cschleiden/replace-tokens@v1
+        with:
+          files: "./kubernetes-aws/*.yml"
+          tokenPrefix: "__"
+          tokenSuffix: "__"
+
+      - name: Create Kubernetes secret
+        run: |
+          kubectl create secret generic mysql-credentials \
+            --from-literal=username=${{ secrets.MYSQL_USERNAME }} \
+            --from-literal=password=${{ secrets.MYSQL_PASSWORD }}
+
+      - name: Kubernetes Apply
+        run: |
+          Kubernetes apply -f ./kubernetes-aws/
