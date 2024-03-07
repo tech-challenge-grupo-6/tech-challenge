@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: controladorpagamento-fake
-          image: ghcr.io/renansx/controladorpagamento-fake:latest
+          image: ghcr.io/tech-challenge-grupo-6/controladorpagamento-fake:latest
           env:
             - name: TaxaAprovacao
               value: "100"

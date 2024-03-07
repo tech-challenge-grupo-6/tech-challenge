@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: controladorpedidos-app
-          image: ghcr.io/renansx/controladorpedidos-app:latest
+          image: ghcr.io/tech-challenge-grupo-6/controladorpedidos-app:latest
           env:
             - name: ConnectionStrings__DefaultConnection
               value: "Server=mysql-service;Database=controlador_pedidos;User=root;Password=P@ssWord;port=3306;SslMode=None"
