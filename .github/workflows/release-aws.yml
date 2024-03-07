@@ -45,9 +45,6 @@ jobs:
 
   eks-deploy:
     runs-on: ubuntu-latest
-    env:
-      CONTROLADOR_PEDIDO_IMAGE_NAME=${{ env.CONTROLADORPEDIDOS_APP_ECR }}/controladorpedidos-app:latest
-      CONTROLADOR_PAGAMENTO_IMAGE_NAME=${{ env.CONTROLADORPAGAMENTO_FAKE_ECR }}/controladorpagamento-fake:latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -58,6 +55,18 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: us-east-1
+
+      - name: Get ECR Urls
+        run: |
+          controladorpedidos-app-ecr=$(aws ecr describe-repositories --repository-names controladorpedidos-app --region us-east-1 | jq -r '.repositories[0].repositoryUri')
+          controladorpagamento-fake-ecr=$(aws ecr describe-repositories --repository-names controladorpagamento-fake --region us-east-1 | jq -r '.repositories[0].repositoryUri')
+          echo "CONTROLADORPEDIDOS_APP_ECR=$controladorpedidos-app-ecr" >> $GITHUB_ENV
+          echo "CONTROLADORPAGAMENTO_FAKE_ECR=$controladorpagamento-fake-ecr" >> $GITHUB_ENV
+
+      - name: Set Images Names
+        run: |
+          echo "CONTROLADOR_PEDIDO_IMAGE_NAME=${{ env.CONTROLADORPEDIDOS_APP_ECR }}/controladorpedidos-app:latest" >> $GITHUB_ENV
+          echo "CONTROLADOR_PAGAMENTO_IMAGE_NAME=${{ env.CONTROLADORPAGAMENTO_FAKE_ECR }}/controladorpagamento-fake:latest" >> $GITHUB_ENV
 
       - name: Update kubeconfig
         run: |
