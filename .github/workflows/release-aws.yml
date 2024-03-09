@@ -75,8 +75,8 @@ jobs:
 
       - name: Get RDS instance name
         run: |
-          AWS_RDS_INSTANCE_NAME=$(aws rds describe-db-instances --region us-east-1 | jq -r '.DBInstances[0].DBInstanceIdentifier')
-          echo "AWS_RDS_INSTANCE_NAME=$AWS_RDS_INSTANCE_NAME" >> $GITHUB_ENV
+          AWS_RDS_INSTANCE_URL=$(aws rds describe-db-instances --region us-east-1 | jq -r '.DBInstances[0].Endpoint.Address')
+          echo "AWS_RDS_INSTANCE_URL=$AWS_RDS_INSTANCE_URL" >> $GITHUB_ENV
 
       - name: Replace tokens in Kubernetes files
         uses: cschleiden/replace-tokens@v1

@@ -4,4 +4,4 @@ metadata:
   name: mysql-service
 spec:
   type: ExternalName
-  externalName: __AWS_RDS_INSTANCE_NAME__
+  externalName: __AWS_RDS_INSTANCE_URL__
