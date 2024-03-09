@@ -97,4 +97,4 @@ jobs:
 
       - name: Kubernetes Apply
         run: |
-          Kubernetes apply -f ./kubernetes-aws/
+          kubectl apply -f ./kubernetes-aws/
