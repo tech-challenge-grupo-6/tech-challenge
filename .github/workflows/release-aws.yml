@@ -20,10 +20,10 @@ jobs:
 
       - name: Get ECR Urls
         run: |
-          controladorpedidos-app-ecr="$(aws ecr describe-repositories --repository-names controladorpedidos-app --region us-east-1 | jq -r '.repositories[0].repositoryUri')"
-          controladorpagamento-fake-ecr="$(aws ecr describe-repositories --repository-names controladorpagamento-fake --region us-east-1 | jq -r '.repositories[0].repositoryUri')"
-          echo "CONTROLADORPEDIDOS_APP_ECR=$controladorpedidos-app-ecr" >> $GITHUB_ENV
-          echo "CONTROLADORPAGAMENTO_FAKE_ECR=$controladorpagamento-fake-ecr" >> $GITHUB_ENV
+          controladorpedidos_app_ecr=$(aws ecr describe-repositories --repository-names controladorpedidos-app --region us-east-1 | jq -r '.repositories[0].repositoryUri')
+          controladorpagamento_fake_ecr=$(aws ecr describe-repositories --repository-names controladorpagamento-fake --region us-east-1 | jq -r '.repositories[0].repositoryUri')
+          echo "CONTROLADORPEDIDOS_APP_ECR=$controladorpedidos_app_ecr" >> $GITHUB_ENV
+          echo "CONTROLADORPAGAMENTO_FAKE_ECR=$controladorpagamento_fake_ecr" >> $GITHUB_ENV
 
       - name: Docker Login to ECR
         run: |
@@ -59,10 +59,10 @@ jobs:
 
       - name: Get ECR Urls
         run: |
-          controladorpedidos-app-ecr="$(aws ecr describe-repositories --repository-names controladorpedidos-app --region us-east-1 | jq -r '.repositories[0].repositoryUri')"
-          controladorpagamento-fake-ecr="$(aws ecr describe-repositories --repository-names controladorpagamento-fake --region us-east-1 | jq -r '.repositories[0].repositoryUri')"
-          echo "CONTROLADORPEDIDOS_APP_ECR=$controladorpedidos-app-ecr" >> $GITHUB_ENV
-          echo "CONTROLADORPAGAMENTO_FAKE_ECR=$controladorpagamento-fake-ecr" >> $GITHUB_ENV
+          controladorpedidos_app_ecr=$(aws ecr describe-repositories --repository-names controladorpedidos-app --region us-east-1 | jq -r '.repositories[0].repositoryUri')
+          controladorpagamento_fake_ecr=$(aws ecr describe-repositories --repository-names controladorpagamento-fake --region us-east-1 | jq -r '.repositories[0].repositoryUri')
+          echo "CONTROLADORPEDIDOS_APP_ECR=$controladorpedidos_app_ecr" >> $GITHUB_ENV
+          echo "CONTROLADORPAGAMENTO_FAKE_ECR=$controladorpagamento_fake_ecr" >> $GITHUB_ENV
 
       - name: Set Images Names
         run: |
@@ -75,7 +75,7 @@ jobs:
 
       - name: Get RDS instance name
         run: |
-          AWS_RDS_INSTANCE_NAME="$(aws rds describe-db-instances --region us-east-1 | jq -r '.DBInstances[0].DBInstanceIdentifier')"
+          AWS_RDS_INSTANCE_NAME=$(aws rds describe-db-instances --region us-east-1 | jq -r '.DBInstances[0].DBInstanceIdentifier')
           echo "AWS_RDS_INSTANCE_NAME=$AWS_RDS_INSTANCE_NAME" >> $GITHUB_ENV
 
       - name: Replace tokens in Kubernetes files
@@ -84,6 +84,10 @@ jobs:
           files: "./kubernetes-aws/*.yml"
           tokenPrefix: "__"
           tokenSuffix: "__"
+
+      - name: Show files
+        run: |
+          cat ./kubernetes-aws/*.yml
 
       - name: Create Kubernetes secret
         run: |
