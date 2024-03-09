@@ -91,6 +91,7 @@ jobs:
 
       - name: Create Kubernetes secret
         run: |
+          kubectl delete secret generic mysql-credentials --ignore-not-found
           kubectl create secret generic mysql-credentials \
             --from-literal=username=${{ secrets.MYSQL_USERNAME }} \
             --from-literal=password=${{ secrets.MYSQL_PASSWORD }}
