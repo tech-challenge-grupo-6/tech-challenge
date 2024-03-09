@@ -2,6 +2,7 @@ using ControladorPedidos.App.Contracts;
 using ControladorPedidos.App.Entities;
 using ControladorPedidos.App.Entities.Exceptions;
 using ControladorPedidos.App.Presenters;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ControladorPedidos.App.Controllers;
@@ -18,6 +19,7 @@ public class ClienteController(ILogger<ClienteController> logger, IClienteUseCas
     /// <response code="200">Retorno dados do cliente.</response>
     /// <response code="404">Não encontrado.</response>
     /// <response code="500">Erro interno.</response>
+    [Authorize]
     [HttpGet("{cpf}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -55,6 +57,7 @@ public class ClienteController(ILogger<ClienteController> logger, IClienteUseCas
     /// <response code="201">Cliente criado com sucesso.</response>
     /// <response code="400">Erro ao fazer a Request.</response>
     /// <response code="500">Erro interno.</response>
+    [Authorize]
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
