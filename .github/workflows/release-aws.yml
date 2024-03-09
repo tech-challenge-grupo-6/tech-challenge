@@ -32,16 +32,16 @@ jobs:
 
       - name: Docker Build Controlador Pedidos
         run: |
-          docker build . -f src/ControladorPedidos.App/Dockerfile -t ${{ env.CONTROLADORPEDIDOS_APP_ECR }}/controladorpedidos-app:latest
+          docker build . -f src/ControladorPedidos.App/Dockerfile -t ${{ env.CONTROLADORPEDIDOS_APP_ECR }}:latest
 
       - name: Docker Build Controlador Pagamento
         run: |
-          docker build . -f src/ControladorPagamento.Fake/Dockerfile -t ${{ env.CONTROLADORPAGAMENTO_FAKE_ECR }}/controladorpagamento-fake:latest
+          docker build . -f src/ControladorPagamento.Fake/Dockerfile -t ${{ env.CONTROLADORPAGAMENTO_FAKE_ECR }}:latest
 
       - name: Docker Push
         run: |
-          docker push ${{ env.CONTROLADORPEDIDOS_APP_ECR }}/controladorpedidos-app:latest
-          docker push ${{ env.CONTROLADORPAGAMENTO_FAKE_ECR }}/controladorpagamento-fake:latest
+          docker push ${{ env.CONTROLADORPEDIDOS_APP_ECR }}:latest
+          docker push ${{ env.CONTROLADORPAGAMENTO_FAKE_ECR }}:latest
 
   eks-deploy:
     runs-on: ubuntu-latest
@@ -66,8 +66,8 @@ jobs:
 
       - name: Set Images Names
         run: |
-          echo "CONTROLADOR_PEDIDO_IMAGE_NAME=${{ env.CONTROLADORPEDIDOS_APP_ECR }}/controladorpedidos-app:latest" >> $GITHUB_ENV
-          echo "CONTROLADOR_PAGAMENTO_IMAGE_NAME=${{ env.CONTROLADORPAGAMENTO_FAKE_ECR }}/controladorpagamento-fake:latest" >> $GITHUB_ENV
+          echo "CONTROLADOR_PEDIDO_IMAGE_NAME=${{ env.CONTROLADORPEDIDOS_APP_ECR }}:latest" >> $GITHUB_ENV
+          echo "CONTROLADOR_PAGAMENTO_IMAGE_NAME=${{ env.CONTROLADORPAGAMENTO_FAKE_ECR }}:latest" >> $GITHUB_ENV
 
       - name: Update kubeconfig
         run: |
