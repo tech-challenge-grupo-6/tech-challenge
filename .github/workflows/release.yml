@@ -20,15 +20,15 @@ jobs:
 
       - name: Docker Build Controlador Pedidos
         run: |
-          docker build . -f src/ControladorPedidos.App/Dockerfile -t ghcr.io/renansx/controladorpedidos-app:latest -t ghcr.io/renansx/controladorpedidos-app:${{ github.event.release.tag_name }}
+          docker build . -f src/ControladorPedidos.App/Dockerfile -t ghcr.io/tech-challenge-grupo-6/controladorpedidos-app:latest -t ghcr.io/tech-challenge-grupo-6/controladorpedidos-app:${{ github.event.release.tag_name }}
 
       - name: Docker Build Controlador Pagamento
         run: |
-          docker build . -f src/ControladorPagamento.Fake/Dockerfile -t ghcr.io/renansx/controladorpagamento-fake:latest -t ghcr.io/renansx/controladorpagamento-fake:${{ github.event.release.tag_name }}
+          docker build . -f src/ControladorPagamento.Fake/Dockerfile -t ghcr.io/tech-challenge-grupo-6/controladorpagamento-fake:latest -t ghcr.io/tech-challenge-grupo-6/controladorpagamento-fake:${{ github.event.release.tag_name }}
 
       - name: Docker Push
         run: |
-          docker push ghcr.io/renansx/controladorpedidos-app:latest
-          docker push ghcr.io/renansx/controladorpedidos-app:${{ github.event.release.tag_name }}
-          docker push ghcr.io/renansx/controladorpagamento-fake:latest
-          docker push ghcr.io/renansx/controladorpagamento-fake:${{ github.event.release.tag_name }}
+          docker push ghcr.io/tech-challenge-grupo-6/controladorpedidos-app:latest
+          docker push ghcr.io/tech-challenge-grupo-6/controladorpedidos-app:${{ github.event.release.tag_name }}
+          docker push ghcr.io/tech-challenge-grupo-6/controladorpagamento-fake:latest
+          docker push ghcr.io/tech-challenge-grupo-6/controladorpagamento-fake:${{ github.event.release.tag_name }}

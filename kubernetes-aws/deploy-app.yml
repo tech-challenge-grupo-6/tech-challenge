@@ -16,10 +16,20 @@ spec:
     spec:
       containers:
         - name: controladorpedidos-app
-          image: ghcr.io/tech-challenge-grupo-6/controladorpedidos-app:latest
+          image: __CONTROLADOR_PEDIDO_IMAGE_NAME__
           env:
+            - name: MYSQL_USER
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-credentials
+                  key: user
+            - name: MYSQL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-credentials
+                  key: password
             - name: ConnectionStrings__DefaultConnection
-              value: "Server=mysql-service;Database=controlador_pedidos;User=root;Password=P@ssWord;port=3306;SslMode=None"
+              value: "Server=mysql-service;Database=controlador_pedidos;User=$(MYSQL_USER);Password=$(MYSQL_PASSWORD);port=3306;SslMode=None"
             - name: PagamentoUrl
               value: http://controladorpagamento-fake:5083/pagar
           ports:
