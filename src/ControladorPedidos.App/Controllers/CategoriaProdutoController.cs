@@ -2,6 +2,7 @@ using ControladorPedidos.App.Contracts;
 using ControladorPedidos.App.Entities;
 using ControladorPedidos.App.Entities.Exceptions;
 using ControladorPedidos.App.Presenters;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ControladorPedidos.App.Controllers;
@@ -17,6 +18,7 @@ public class CategoriaProdutoController(ILogger<CategoriaProdutoController> logg
     /// <response code="200">Retorno da lista de produto(s) consultado(s).</response>
     /// <response code="400">Erro ao fazer a Request.</response>
     /// <response code="500">Erro Interno.</response>
+    [Authorize]
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -47,6 +49,7 @@ public class CategoriaProdutoController(ILogger<CategoriaProdutoController> logg
     /// <returns>Retorna ID nova categoria produto.</returns>
     /// <response code="201">Categoria criada com sucesso</response>
     /// <response code="500">Erro Interno.</response>
+    [Authorize]
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
