@@ -78,6 +78,13 @@ jobs:
           AWS_RDS_INSTANCE_URL=$(aws rds describe-db-instances --region us-east-1 | jq -r '.DBInstances[0].Endpoint.Address')
           echo "AWS_RDS_INSTANCE_URL=$AWS_RDS_INSTANCE_URL" >> $GITHUB_ENV
 
+      - name: Get Cognito Information
+        run: |
+          USER_POOL_ID=$(aws cognito-idp list-user-pools --max-results 60 | jq -r '.UserPools[] | select(.Name=="techchallenge-users") | .Id')
+          CLIENT_ID=$(aws cognito-idp list-user-pool-clients --user-pool-id $USER_POOL_ID | jq -r '.UserPoolClients[0].ClientId')
+          echo "USER_POOL_ID=$USER_POOL_ID" >> $GITHUB_ENV
+          echo "CLIENT_ID=$CLIENT_ID" >> $GITHUB_ENV
+
       - name: Replace tokens in Kubernetes files
         uses: cschleiden/replace-tokens@v1
         with:
