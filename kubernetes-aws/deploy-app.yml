@@ -35,7 +35,7 @@ spec:
             - name: AWS__Region
               value: "us-east-1"
             - name: AWS_UserPoolId
-              vale: "__USER_POOL_ID__"
+              value: "__USER_POOL_ID__"
             - name: AWS_AppClientId
               value: "__CLIENT_ID__"
           ports:
