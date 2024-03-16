@@ -34,9 +34,9 @@ spec:
               value: http://controladorpagamento-fake:5083/pagar
             - name: AWS__Region
               value: "us-east-1"
-            - name: AWS_UserPoolId
+            - name: AWS__UserPoolId
               value: "__USER_POOL_ID__"
-            - name: AWS_AppClientId
+            - name: AWS__AppClientId
               value: "__CLIENT_ID__"
           ports:
             - containerPort: 5003
