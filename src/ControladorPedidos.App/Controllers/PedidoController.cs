@@ -3,6 +3,7 @@ using ControladorPedidos.App.Entities;
 using ControladorPedidos.App.Entities.Exceptions;
 using ControladorPedidos.App.Entities.Shared;
 using ControladorPedidos.App.Presenters;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ControladorPedidos.App.Controllers;
@@ -18,6 +19,7 @@ public class PedidoController(IPedidoUseCase pedidoUseCase, ILogger<PedidoContro
     /// <response code="200">Retorno todos os pedidos.</response>
     /// <response code="404">Não encontrado.</response>
     /// <response code="500">Erro interno.</response>
+    [Authorize]
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -49,6 +51,7 @@ public class PedidoController(IPedidoUseCase pedidoUseCase, ILogger<PedidoContro
     /// <response code="201">Pedido criado com sucesso.</response>
     /// <response code="400">Erro ao fazer a Request.</response>
     /// <response code="500">Erro interno.</response>
+    [Authorize]
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -83,6 +86,7 @@ public class PedidoController(IPedidoUseCase pedidoUseCase, ILogger<PedidoContro
     /// <response code="204">Sem nenhum retorno.</response>
     /// <response code="400">Erro ao fazer a Request.</response>
     /// <response code="500">Erro interno.</response>
+    [Authorize]
     [HttpPatch("{id}/status/emprogresso")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -115,6 +119,7 @@ public class PedidoController(IPedidoUseCase pedidoUseCase, ILogger<PedidoContro
     /// <response code="204">Sem nenhum retorno.</response>
     /// <response code="400">Erro ao fazer a Request.</response>
     /// <response code="500">Erro interno.</response>
+    [Authorize]
     [HttpPatch("{id}/status/pronto")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -147,6 +152,7 @@ public class PedidoController(IPedidoUseCase pedidoUseCase, ILogger<PedidoContro
     /// <response code="204">Sem nenhum retorno.</response>
     /// <response code="400">Erro ao fazer a Request.</response>
     /// <response code="500">Erro interno.</response>
+    [Authorize]
     [HttpPatch("{id}/status/finalizado")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]

@@ -2,6 +2,7 @@ using ControladorPedidos.App.Contracts;
 using ControladorPedidos.App.Entities;
 using ControladorPedidos.App.Entities.Exceptions;
 using ControladorPedidos.App.Presenters;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ControladorPedidos.App.Controllers;
@@ -18,6 +19,7 @@ public class ProdutoController(ILogger<ProdutoController> logger, IProdutoUseCas
     /// <response code="200">Retorno dados do produto.</response>
     /// <response code="404">Não encontrado.</response>
     /// <response code="500">Erro interno.</response>
+    [Authorize]
     [HttpGet("{categoriaId}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -49,6 +51,7 @@ public class ProdutoController(ILogger<ProdutoController> logger, IProdutoUseCas
     /// <response code="201">Produto criado com sucesso</response>
     /// <response code="400">Bad request</response>
     /// <response code="500">Erro Interno.</response>
+    [Authorize]
     [HttpPost]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -83,6 +86,7 @@ public class ProdutoController(ILogger<ProdutoController> logger, IProdutoUseCas
     /// <response code="200">Produto editado com sucesso</response>
     /// <response code="404">Produto não encontrado</response>
     /// <response code="400">Bad request.</response>
+    [Authorize]
     [HttpPut("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -114,6 +118,7 @@ public class ProdutoController(ILogger<ProdutoController> logger, IProdutoUseCas
     /// <response code="200">Produto deletado com sucesso</response>
     /// <response code="404">Produto não encontrado</response>
     /// <response code="400">Bad request.</response>
+    [Authorize]
     [HttpDelete("{id}")]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
