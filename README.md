@@ -15,12 +15,6 @@ Swagger (localhost): [Link para Swagger](http://localhost:5003/swagger/index.htm
 
 Postman Collections: [Link para Postman Collections](https://github.com/RenanSX/tech-challenge/tree/main/documentation/postman)
 
-## Como executar localmente
-
-- Faça a clone deste repositório
-- Acesse a pasta raiz do projeto onde se encontram os arquivos `docker-compose.yml`
-- Execute o comando `docker-compose up -d --build`
-
 ## Contexto do Negócio
 
 A lanchonete de bairro, devido ao seu sucesso crescente, está expandindo suas operações. No entanto, sem um sistema de controle de pedidos eficiente, o atendimento aos clientes pode ser caótico e resultar em insatisfação. Para solucionar esse problema, a lanchonete está investindo em um sistema de autoatendimento de fast food, com as seguintes funcionalidades:
@@ -153,8 +147,6 @@ Na solução proposta, podemos identificar os seguintes domínios:
 ![c4-model-cointext](./documentation/arquitetura/diagrama-controlador-pedidos-C4.drawio.png)
 
 
-
-
 ## Como inicializar a aplicação localmente
 
 - Pré-requisitos minimos:
@@ -178,7 +170,7 @@ Na solução proposta, podemos identificar os seguintes domínios:
 
 ## Como simular o fluxo de pagamento com webhook
 
-- A aplicação conta com seeds que são disparados no momento que a aplicação fica disponivel, fazendo insert's de varios registros para teste.
+- A aplicação conta com seeds que são disparados no momento que a aplicação fica disponível, fazendo insert's de vários registros para teste.
 
 - Para testar o fluxo de pagamento utilizando o weebhook é preciso seguir os seguintes passos.
 
@@ -211,3 +203,9 @@ Na solução proposta, podemos identificar os seguintes domínios:
 - Será possível validar o pagamento no endpoint abaixo.
 
 ![pagamento_check](./documentation/util/pagamento_check_get.png)
+
+## Vídeo demonstrando arquitetura
+
+Esse vídeo demonstra o funcionamento local da arquitetura desenvolvida para o problema do tech challenge.
+
+[Link do vídeo](https://www.youtube.com/watch?v=ms0fsddcP1c)
